@@ -8,7 +8,8 @@ import {
   Target, 
   TrendingUp, 
   Users, 
-  Zap 
+  Zap,
+  Layout
 } from "lucide-react";
 import {
   Sidebar,
@@ -70,6 +71,11 @@ const menuItems = [
     title: "KPIs",
     url: "/kpis",
     icon: Zap,
+  },
+  {
+    title: "LandingPage et site",
+    url: "/landing-pages",
+    icon: Layout,
   }
 ];
 
@@ -81,19 +87,19 @@ export function AppSidebar({ onNavigate }: AppSidebarProps) {
   const [location] = useLocation();
 
   return (
-    <Sidebar>
-      <SidebarHeader className="p-4">
+    <Sidebar className="bg-gradient-to-b from-neutral-900 via-neutral-800 to-neutral-900 border-r border-neutral-800">
+      <SidebarHeader className="p-4 border-b border-neutral-800">
         <div className="flex items-center gap-2">
-          <div className="flex items-center justify-center w-8 h-8 rounded-md bg-primary">
-            <Zap className="h-4 w-4 text-primary-foreground" />
+          <div className="flex items-center justify-center w-8 h-8 rounded-md bg-gradient-to-t from-blue-500 to-blue-600">
+            <Zap className="h-4 w-4 text-white" />
           </div>
-          <span className="font-bold text-lg">InfoScale</span>
+          <span className="font-bold text-lg text-white">InfoScale</span>
         </div>
       </SidebarHeader>
       
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Navigation</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-gray-400">Navigation</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {menuItems.map((item) => {
@@ -102,7 +108,7 @@ export function AppSidebar({ onNavigate }: AppSidebarProps) {
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton 
                       asChild
-                      className={isActive ? "bg-sidebar-accent" : ""}
+                      className={`${isActive ? "bg-gradient-to-r from-blue-500/20 to-blue-600/20 text-blue-400 border border-blue-500/30" : "text-gray-300 hover:bg-white/10 hover:text-white"} transition-all duration-200`}
                       data-testid={`nav-${item.title.toLowerCase()}`}
                     >
                       <button
@@ -110,9 +116,9 @@ export function AppSidebar({ onNavigate }: AppSidebarProps) {
                           console.log(`Navigate to ${item.url}`);
                           onNavigate?.(item.url);
                         }}
-                        className="w-full"
+                        className="w-full flex items-center gap-3 px-3 py-2 rounded-md"
                       >
-                        <item.icon />
+                        <item.icon className="h-4 w-4" />
                         <span>{item.title}</span>
                       </button>
                     </SidebarMenuButton>
@@ -124,7 +130,7 @@ export function AppSidebar({ onNavigate }: AppSidebarProps) {
         </SidebarGroup>
         
         <SidebarGroup>
-          <SidebarGroupLabel>Paramètres</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-gray-400">Paramètres</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
@@ -134,9 +140,9 @@ export function AppSidebar({ onNavigate }: AppSidebarProps) {
                       console.log('Navigate to /settings');
                       onNavigate?.('/settings');
                     }}
-                    className="w-full"
+                    className="w-full flex items-center gap-3 px-3 py-2 rounded-md text-gray-300 hover:bg-white/10 hover:text-white transition-all duration-200"
                   >
-                    <Settings />
+                    <Settings className="h-4 w-4" />
                     <span>Paramètres</span>
                   </button>
                 </SidebarMenuButton>
@@ -146,15 +152,15 @@ export function AppSidebar({ onNavigate }: AppSidebarProps) {
         </SidebarGroup>
       </SidebarContent>
       
-      <SidebarFooter className="p-4">
+      <SidebarFooter className="p-4 border-t border-neutral-800">
         <div className="flex items-center gap-3">
           <Avatar className="h-8 w-8">
             <AvatarImage src="" alt="User" />
-            <AvatarFallback>JD</AvatarFallback>
+            <AvatarFallback className="bg-gradient-to-t from-blue-500 to-blue-600 text-white">JD</AvatarFallback>
           </Avatar>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium truncate">John Doe</p>
-            <p className="text-xs text-muted-foreground truncate">john@example.com</p>
+            <p className="text-sm font-medium truncate text-white">John Doe</p>
+            <p className="text-xs text-gray-400 truncate">john@example.com</p>
           </div>
         </div>
       </SidebarFooter>

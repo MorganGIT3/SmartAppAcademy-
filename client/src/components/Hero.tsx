@@ -1,17 +1,30 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, BarChart3, TrendingUp, Zap } from "lucide-react";
-import heroImage from "@assets/generated_images/SaaS_dashboard_hero_visualization_1267fd75.png";
+import AnimatedGradientBackground from "./AnimatedGradientBackground";
 
 export function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background with gradient overlay */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: `linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(30, 41, 59, 0.8) 100%), url(${heroImage})`
-        }}
+      {/* Animated Gradient Background */}
+      <AnimatedGradientBackground 
+        Breathing={true}
+        animationSpeed={0.03}
+        breathingRange={8}
+        startingGap={120}
+        gradientColors={[
+          "#0A0A0A",
+          "#1E3A8A", 
+          "#3B82F6",
+          "#8B5CF6",
+          "#EC4899",
+          "#F59E0B",
+          "#10B981"
+        ]}
+        gradientStops={[20, 35, 50, 65, 75, 85, 100]}
       />
+      
+      {/* Dark overlay for better text readability */}
+      <div className="absolute inset-0 bg-black/30" />
       
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">

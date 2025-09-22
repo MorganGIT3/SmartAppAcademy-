@@ -5,17 +5,25 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { LandingPage } from "@/components/LandingPage";
-import { DashboardApp } from "@/components/DashboardApp";
+import { NewDashboardApp } from "@/components/NewDashboardApp";
+import { OnboardingPage } from "@/components/OnboardingPage";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showOnboarding, setShowOnboarding] = useState(false);
 
   const handleLogin = () => {
+    setShowOnboarding(true);
+  };
+
+  const handleOnboardingComplete = () => {
+    setShowOnboarding(false);
     setIsLoggedIn(true);
   };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
+    setShowOnboarding(false);
   };
 
   return (
@@ -23,7 +31,9 @@ function App() {
       <TooltipProvider>
         <ThemeProvider defaultTheme="dark">
           {isLoggedIn ? (
-            <DashboardApp onLogout={handleLogout} />
+            <NewDashboardApp onLogout={handleLogout} />
+          ) : showOnboarding ? (
+            <OnboardingPage onContinue={handleOnboardingComplete} />
           ) : (
             <LandingPage onLogin={handleLogin} />
           )}

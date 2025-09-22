@@ -1,8 +1,5 @@
 import { useState } from 'react';
-import { Hero } from './Hero';
-import { Features } from './Features';
-import { Testimonials } from './Testimonials';
-import { CTA } from './CTA';
+import LandingPageNew from './LandingPageNew';
 import { AuthModal } from './AuthModal';
 import { OnboardingModal } from './OnboardingModal';
 import { ThemeToggle } from './ThemeToggle';
@@ -28,16 +25,16 @@ export function LandingPage({ onLogin }: LandingPageProps) {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="relative">
       {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-sm border-b">
+      <nav className="fixed top-0 w-full z-[100] bg-black/80 backdrop-blur-sm border-b border-neutral-800">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="flex items-center justify-center w-8 h-8 rounded-md bg-primary">
-                <Zap className="h-4 w-4 text-primary-foreground" />
+              <div className="flex items-center justify-center w-8 h-8 rounded-md bg-blue-500">
+                <Zap className="h-4 w-4 text-white" />
               </div>
-              <span className="font-bold text-xl">InfoScale</span>
+              <span className="font-bold text-xl text-white">InfoScale</span>
             </div>
             
             <div className="flex items-center gap-4">
@@ -46,12 +43,14 @@ export function LandingPage({ onLogin }: LandingPageProps) {
                 variant="ghost" 
                 onClick={() => setAuthModalOpen(true)}
                 data-testid="nav-login"
+                className="text-white hover:bg-white/10"
               >
                 Connexion
               </Button>
               <Button 
                 onClick={() => setAuthModalOpen(true)}
                 data-testid="nav-signup"
+                className="bg-gradient-to-t from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white border-blue-500"
               >
                 Inscription
               </Button>
@@ -60,31 +59,8 @@ export function LandingPage({ onLogin }: LandingPageProps) {
         </div>
       </nav>
 
-      {/* Content */}
-      <main className="pt-20">
-        <Hero />
-        <Features />
-        <Testimonials />
-        <CTA />
-      </main>
-
-      {/* Footer */}
-      <footer className="bg-muted/30 py-12 px-6">
-        <div className="max-w-7xl mx-auto text-center">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <div className="flex items-center justify-center w-6 h-6 rounded-md bg-primary">
-              <Zap className="h-3 w-3 text-primary-foreground" />
-            </div>
-            <span className="font-bold">InfoScale</span>
-          </div>
-          <p className="text-muted-foreground mb-4">
-            La plateforme tout-en-un pour les infopreneurs qui veulent scaler leur business
-          </p>
-          <p className="text-sm text-muted-foreground">
-            © 2024 InfoScale. Tous droits réservés.
-          </p>
-        </div>
-      </footer>
+      {/* New Landing Page Content */}
+      <LandingPageNew />
 
       {/* Modals */}
       <AuthModal 

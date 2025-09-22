@@ -45,18 +45,34 @@ export async function setupVite(app: Express, server: Server) {
     const url = req.originalUrl;
 
     try {
-      const clientTemplate = path.resolve(
-        import.meta.dirname,
-        "..",
-        "client",
-        "index.html",
-      );
+      let clientTemplate;
+      let scriptSrc;
 
-      // always reload the index.html file from disk incase it changes
+      // Route vers le page builder
+      if (url.startsWith('/page-builder')) {
+        clientTemplate = path.resolve(
+          import.meta.dirname,
+          "..",
+          "client",
+          "page-builder.html",
+        );
+        scriptSrc = `src="/src/page-builder-main.tsx?v=${nanoid()}"`;
+      } else {
+        // Route principale
+        clientTemplate = path.resolve(
+          import.meta.dirname,
+          "..",
+          "client",
+          "index.html",
+        );
+        scriptSrc = `src="/src/main.tsx?v=${nanoid()}"`;
+      }
+
+      // always reload the template file from disk incase it changes
       let template = await fs.promises.readFile(clientTemplate, "utf-8");
       template = template.replace(
-        `src="/src/main.tsx"`,
-        `src="/src/main.tsx?v=${nanoid()}"`,
+        /src="\/src\/[^"]+"/,
+        scriptSrc,
       );
       const page = await vite.transformIndexHtml(url, template);
       res.status(200).set({ "Content-Type": "text/html" }).end(page);

@@ -27,8 +27,15 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
+    rollupOptions: {
+      input: {
+        main: path.resolve(import.meta.dirname, "client", "index.html"),
+        pageBuilder: path.resolve(import.meta.dirname, "client", "page-builder.html"),
+      },
+    },
   },
   server: {
+    port: 5000,
     fs: {
       strict: true,
       deny: ["**/.*"],

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import ConnectCalendlyButton from './ConnectCalendlyButton';
 import { 
   Settings, 
   User, 
@@ -249,21 +250,27 @@ export function SettingsPage() {
                   <p className="text-sm text-gray-400 mb-4">{app.description}</p>
                   
                   <div className="flex gap-2">
-                    <Button
-                      variant={app.connected ? "destructive" : "default"}
-                      size="sm"
-                      onClick={() => toggleConnection(app.id)}
-                      className={app.connected 
-                        ? "bg-red-500/20 text-red-400 hover:bg-red-500/30" 
-                        : "bg-blue-500 hover:bg-blue-600"
-                      }
-                    >
-                      {app.connected ? 'Déconnecter' : 'Connecter'}
-                    </Button>
-                    {app.connected && (
-                      <Button variant="ghost" size="sm" className="text-gray-400 hover:text-white">
-                        <ExternalLink className="h-4 w-4" />
-                      </Button>
+                    {app.id === 'calendly' ? (
+                      <ConnectCalendlyButton userId="user-123" />
+                    ) : (
+                      <>
+                        <Button
+                          variant={app.connected ? "destructive" : "default"}
+                          size="sm"
+                          onClick={() => toggleConnection(app.id)}
+                          className={app.connected 
+                            ? "bg-red-500/20 text-red-400 hover:bg-red-500/30" 
+                            : "bg-blue-500 hover:bg-blue-600"
+                          }
+                        >
+                          {app.connected ? 'Déconnecter' : 'Connecter'}
+                        </Button>
+                        {app.connected && (
+                          <Button variant="ghost" size="sm" className="text-gray-400 hover:text-white">
+                            <ExternalLink className="h-4 w-4" />
+                          </Button>
+                        )}
+                      </>
                     )}
                   </div>
                 </div>

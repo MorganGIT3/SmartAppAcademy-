@@ -11,9 +11,9 @@ export default defineConfig({
       "/src": path.resolve(fileURLToPath(new URL('./client/src', import.meta.url))),
     },
   },
-  root: path.resolve(fileURLToPath(new URL('.', import.meta.url))),
+  root: path.resolve(fileURLToPath(new URL('./client', import.meta.url))),
   build: {
-    outDir: path.resolve(fileURLToPath(new URL('./dist', import.meta.url))), // ✅ dist à la racine du projet
+    outDir: path.resolve(fileURLToPath(new URL('../dist', import.meta.url))), // ✅ dist à la racine pour Vercel
     emptyOutDir: true,
     rollupOptions: {
       input: path.resolve(fileURLToPath(new URL('./client/index.html', import.meta.url))),

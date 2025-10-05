@@ -1,30 +1,20 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import path from "path";
-import { fileURLToPath, URL } from 'node:url';
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
+// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@": path.resolve(fileURLToPath(new URL('./client/src', import.meta.url))),
-      "/src": path.resolve(fileURLToPath(new URL('./client/src', import.meta.url))),
-    },
+      '/src': '/client/src',
+      '@': '/client/src'
+    }
   },
-  root: path.resolve(fileURLToPath(new URL('./client', import.meta.url))),
   build: {
-    outDir: path.resolve(fileURLToPath(new URL('../dist', import.meta.url))), // ✅ dist à la racine pour Vercel
-    emptyOutDir: true,
-    rollupOptions: {
-      input: path.resolve(fileURLToPath(new URL('./client/index.html', import.meta.url))),
-      output: {
-        entryFileNames: 'assets/[name]-[hash].js',
-        chunkFileNames: 'assets/[name]-[hash].js',
-        assetFileNames: 'assets/[name]-[hash].[ext]'
-      }
-    },
+    outDir: 'dist', // ✅ dossier de sortie du build
+    emptyOutDir: true // supprime l'ancien build avant d'en faire un nouveau
   },
   server: {
-    port: 5000,
+    port: 3000, // optionnel : port local
   },
-});
+})

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import ConnectCalendlyButton from './ConnectCalendlyButton';
+import ConnectYouTubeButton from './ConnectYouTubeButton';
 import { 
   Settings, 
   User, 
@@ -252,6 +253,8 @@ export function SettingsPage() {
                   <div className="flex gap-2">
                     {app.id === 'calendly' ? (
                       <ConnectCalendlyButton userId="user-123" />
+                    ) : app.id === 'zoom' ? (
+                      <ConnectYouTubeButton userId="user-123" />
                     ) : (
                       <>
                         <Button

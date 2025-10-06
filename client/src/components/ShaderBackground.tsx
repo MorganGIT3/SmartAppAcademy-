@@ -149,7 +149,12 @@ const fragmentShader = `
   
   void main() {
     vec2 uv = vUv * 2.0 - 1.0; uv.y *= -1.0;
-    gl_FragColor = cppn_fn(uv, 0.1 * sin(0.3 * iTime), 0.1 * sin(0.69 * iTime), 0.1 * sin(0.44 * iTime));
+    // Base CPPN color
+    vec4 cppn = cppn_fn(uv, 0.1 * sin(0.3 * iTime), 0.1 * sin(0.69 * iTime), 0.1 * sin(0.44 * iTime));
+    // Apply blue tint to shift the palette toward blue hues
+    vec3 blueTint = vec3(0.40, 0.60, 1.00);
+    vec3 rgb = clamp(cppn.rgb * blueTint, 0.0, 1.0);
+    gl_FragColor = vec4(rgb, 1.0);
   }
 `;
 
@@ -208,7 +213,7 @@ export function ShaderBackground() {
   );
   
   return (
-    <div ref={canvasRef} className="bg-black absolute inset-0 -z-10 w-full h-full" aria-hidden>
+    <div ref={canvasRef} className="absolute inset-0 w-full h-full" aria-hidden style={{ zIndex: -1 }}>
       <Canvas
         camera={camera}
         gl={{ antialias: true, alpha: false }}
@@ -217,7 +222,7 @@ export function ShaderBackground() {
       >
         <ShaderPlane />
       </Canvas>
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-black/20" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-black/10" />
     </div>
   );
 }

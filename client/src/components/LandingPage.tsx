@@ -27,6 +27,11 @@ export function LandingPage({ onLogin }: LandingPageProps) {
 
   return (
     <div className="relative min-h-screen bg-black">
+      {/* Shader Background (blue) */}
+      <div className="absolute inset-0 z-0">
+        <ShaderBackground />
+      </div>
+
       {/* Integrated Navigation in Background */}
       <div className="absolute top-0 left-0 right-0 z-10 p-6">
         <div className="flex items-center justify-between">
@@ -59,7 +64,9 @@ export function LandingPage({ onLogin }: LandingPageProps) {
       </div>
 
       {/* Blue LEDs Background Effect */}
-      <BlueLEDs />
+      <div className="relative z-5">
+        <BlueLEDs />
+      </div>
 
       {/* New Landing Page Content */}
       <div className="relative z-20">

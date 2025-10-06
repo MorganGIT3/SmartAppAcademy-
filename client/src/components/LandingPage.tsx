@@ -5,8 +5,10 @@ import { OnboardingModal } from './OnboardingModal';
 import { ThemeToggle } from './ThemeToggle';
 import { BlueLEDs } from './BlueLEDs';
 import { BlueGlowBackground } from './BlueGlowBackground';
+import { BeamsBackground } from './BeamsBackground';
 import { Button } from '@/components/ui/button';
 import { Zap } from 'lucide-react';
+import { useClickSound } from '@/hooks/useClickSound';
 
 interface LandingPageProps {
   onLogin?: () => void;
@@ -15,6 +17,7 @@ interface LandingPageProps {
 export function LandingPage({ onLogin }: LandingPageProps) {
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [onboardingOpen, setOnboardingOpen] = useState(false);
+  const playClick = useClickSound(0.3);
 
   const handleAuthSuccess = () => {
     setAuthModalOpen(false);
@@ -28,9 +31,9 @@ export function LandingPage({ onLogin }: LandingPageProps) {
 
   return (
     <div className="relative min-h-screen bg-black">
-      {/* Blue Glow Background */}
+      {/* Beams Background (blue) */}
       <div className="absolute inset-0 z-0">
-        <BlueGlowBackground />
+        <BeamsBackground intensity="strong" />
       </div>
 
       {/* Integrated Navigation in Background */}
@@ -47,14 +50,14 @@ export function LandingPage({ onLogin }: LandingPageProps) {
             <ThemeToggle />
             <Button 
               variant="ghost" 
-              onClick={() => setAuthModalOpen(true)}
+              onClick={() => { playClick(); setAuthModalOpen(true); }}
               data-testid="nav-login"
               className="text-white hover:bg-white/10 backdrop-blur-sm"
             >
               Connexion
             </Button>
             <Button 
-              onClick={() => setAuthModalOpen(true)}
+              onClick={() => { playClick(); setAuthModalOpen(true); }}
               data-testid="nav-signup"
               className="bg-gradient-to-t from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white border-blue-500 shadow-lg shadow-blue-500/50"
             >

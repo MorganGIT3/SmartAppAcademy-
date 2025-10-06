@@ -39,10 +39,15 @@ export function AuthModal({ open, onOpenChange, onAuthSuccess }: AuthModalProps)
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md p-0 border-0 overflow-hidden">
-        <div className="relative w-full overflow-hidden">
-          {/* Magnificent Blue Background */}
+      <DialogContent className="sm:max-w-md p-0 border-0 overflow-hidden rounded-3xl">
+        <div className="relative w-full overflow-hidden rounded-3xl">
+          {/* Magnificent Blue Background with Animation */}
           <div className="absolute inset-0 z-0">
+            <img
+              src="https://media.giphy.com/media/xJT7pzbviKNqTqF1Ps/giphy.gif"
+              alt="Tunnel animation"
+              className="w-full h-full object-cover opacity-60"
+            />
             <div className="absolute inset-0 bg-gradient-to-b from-blue-600/80 via-blue-800/90 to-black/95" />
             <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 via-blue-700/30 to-blue-900/40" />
           </div>
@@ -93,7 +98,7 @@ export function AuthModal({ open, onOpenChange, onAuthSuccess }: AuthModalProps)
                           value={loginData.email}
                           onChange={(e) => setLoginData(prev => ({ ...prev, email: e.target.value }))}
                           data-testid="input-login-email"
-                          className="bg-white/10 border-white/20 text-white placeholder-white/40 focus:bg-white/20 focus:border-white/40"
+                          className="bg-white/10 border-white/20 text-white placeholder-white/40 focus:bg-white/20 focus:border-white/40 rounded-2xl"
                           required
                         />
                       </div>
@@ -107,7 +112,7 @@ export function AuthModal({ open, onOpenChange, onAuthSuccess }: AuthModalProps)
                             value={loginData.password}
                             onChange={(e) => setLoginData(prev => ({ ...prev, password: e.target.value }))}
                             data-testid="input-login-password"
-                            className="bg-white/10 border-white/20 text-white placeholder-white/40 focus:bg-white/20 focus:border-white/40"
+                            className="bg-white/10 border-white/20 text-white placeholder-white/40 focus:bg-white/20 focus:border-white/40 rounded-2xl"
                             required
                           />
                           <Button
@@ -157,7 +162,7 @@ export function AuthModal({ open, onOpenChange, onAuthSuccess }: AuthModalProps)
                           value={signupData.name}
                           onChange={(e) => setSignupData(prev => ({ ...prev, name: e.target.value }))}
                           data-testid="input-signup-name"
-                          className="bg-white/10 border-white/20 text-white placeholder-white/40 focus:bg-white/20 focus:border-white/40"
+                          className="bg-white/10 border-white/20 text-white placeholder-white/40 focus:bg-white/20 focus:border-white/40 rounded-2xl"
                           required
                         />
                       </div>
@@ -170,7 +175,7 @@ export function AuthModal({ open, onOpenChange, onAuthSuccess }: AuthModalProps)
                           value={signupData.email}
                           onChange={(e) => setSignupData(prev => ({ ...prev, email: e.target.value }))}
                           data-testid="input-signup-email"
-                          className="bg-white/10 border-white/20 text-white placeholder-white/40 focus:bg-white/20 focus:border-white/40"
+                          className="bg-white/10 border-white/20 text-white placeholder-white/40 focus:bg-white/20 focus:border-white/40 rounded-2xl"
                           required
                         />
                       </div>
@@ -183,7 +188,7 @@ export function AuthModal({ open, onOpenChange, onAuthSuccess }: AuthModalProps)
                           value={signupData.password}
                           onChange={(e) => setSignupData(prev => ({ ...prev, password: e.target.value }))}
                           data-testid="input-signup-password"
-                          className="bg-white/10 border-white/20 text-white placeholder-white/40 focus:bg-white/20 focus:border-white/40"
+                          className="bg-white/10 border-white/20 text-white placeholder-white/40 focus:bg-white/20 focus:border-white/40 rounded-2xl"
                           required
                         />
                       </div>
@@ -196,7 +201,7 @@ export function AuthModal({ open, onOpenChange, onAuthSuccess }: AuthModalProps)
                           value={signupData.confirmPassword}
                           onChange={(e) => setSignupData(prev => ({ ...prev, confirmPassword: e.target.value }))}
                           data-testid="input-signup-confirm"
-                          className="bg-white/10 border-white/20 text-white placeholder-white/40 focus:bg-white/20 focus:border-white/40"
+                          className="bg-white/10 border-white/20 text-white placeholder-white/40 focus:bg-white/20 focus:border-white/40 rounded-2xl"
                           required
                         />
                       </div>

@@ -53,21 +53,21 @@ export default function LandingPageNew({ onLogin, onSignup }: LandingPageNewProp
           Crée, lance et vends ton application IA no‑code à des entreprises
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <div className="flex flex-col sm:flex-row gap-4 justify-center relative z-30">
           <button 
             onClick={onSignup}
-            className="bg-gradient-to-t from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-8 py-4 text-lg rounded-lg transition-all duration-200 shadow-lg shadow-blue-500/50"
+            className="bg-gradient-to-t from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-8 py-4 text-lg rounded-lg transition-all duration-200 shadow-lg shadow-blue-500/50 cursor-pointer relative z-40"
           >
             Je m'inscris
           </button>
           <button 
             onClick={onLogin}
-            className="bg-transparent border border-gray-600 text-black dark:text-white hover:bg-white/10 px-8 py-4 text-lg rounded-lg transition-all duration-200"
+            className="bg-transparent border border-gray-600 text-black dark:text-white hover:bg-white/10 px-8 py-4 text-lg rounded-lg transition-all duration-200 cursor-pointer relative z-40"
           >
             Connection
                   </button>
         </div>
-          </div>
+      </div>
     </AuroraBackground>
   );
 }

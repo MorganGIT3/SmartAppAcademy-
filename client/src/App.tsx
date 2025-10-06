@@ -5,6 +5,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { Navigation } from "@/components/Navigation";
 import { LandingPage } from "@/components/LandingPage";
 import { Dashboard } from "@/components/Dashboard";
 import { Integrations } from "@/components/Integrations";
@@ -38,11 +39,14 @@ function App() {
           ) : showOnboarding ? (
             <OnboardingPage onContinue={handleOnboardingComplete} />
           ) : (
-            <Routes>
-              <Route path="/" element={<LandingPage onLogin={handleLogin} />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/integrations" element={<Integrations />} />
-            </Routes>
+            <>
+              <Navigation />
+              <Routes>
+                <Route path="/" element={<LandingPage onLogin={handleLogin} />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/integrations" element={<Integrations />} />
+              </Routes>
+            </>
           )}
           <Toaster />
         </ThemeProvider>

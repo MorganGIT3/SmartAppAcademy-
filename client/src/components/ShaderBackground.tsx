@@ -5,11 +5,6 @@ import { Canvas, useFrame, extend } from '@react-three/fiber';
 import { shaderMaterial } from '@react-three/drei';
 import * as THREE from 'three';
 
-import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
-
-gsap.registerPlugin(useGSAP);
-
 // ===================== SHADER =====================
 const vertexShader = `
   varying vec2 vUv;
@@ -187,31 +182,8 @@ function ShaderPlane() {
 
 export function ShaderBackground() {
   const canvasRef = useRef<HTMLDivElement | null>(null);
-  
   const camera = useMemo(() => ({ position: [0, 0, 1] as [number, number, number], fov: 75, near: 0.1, far: 1000 }), []);
-  
-  useGSAP(
-    () => {
-      if (!canvasRef.current) return;
-      
-      gsap.set(canvasRef.current, {
-        filter: 'blur(20px)',
-        scale: 1.1,
-        autoAlpha: 0.7
-      });
-      
-      gsap.to(canvasRef.current, {
-        filter: 'blur(0px)',
-        scale: 1,
-        autoAlpha: 1,
-        duration: 1.5,
-        ease: 'power3.out',
-        delay: 0.3
-      });
-    },
-    { scope: canvasRef }
-  );
-  
+
   return (
     <div ref={canvasRef} className="absolute inset-0 w-full h-full" aria-hidden style={{ zIndex: -1 }}>
       <Canvas

@@ -4,6 +4,7 @@ import { AuthModal } from './AuthModal';
 import { OnboardingModal } from './OnboardingModal';
 import { ThemeToggle } from './ThemeToggle';
 import { BlueLEDs } from './BlueLEDs';
+import { BlueGlowBackground } from './BlueGlowBackground';
 import { Button } from '@/components/ui/button';
 import { Zap } from 'lucide-react';
 
@@ -27,9 +28,9 @@ export function LandingPage({ onLogin }: LandingPageProps) {
 
   return (
     <div className="relative min-h-screen bg-black">
-      {/* Shader Background (blue) */}
+      {/* Blue Glow Background */}
       <div className="absolute inset-0 z-0">
-        <ShaderBackground />
+        <BlueGlowBackground />
       </div>
 
       {/* Integrated Navigation in Background */}

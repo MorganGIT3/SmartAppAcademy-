@@ -83,7 +83,10 @@ export function LandingPage({ onLogin }: LandingPageProps) {
       </div>
 
       {/* New Landing Page Content */}
-      <LandingPageNew />
+      <LandingPageNew 
+        onLogin={() => setAuthModalOpen(true)}
+        onSignup={() => setAuthModalOpen(true)}
+      />
 
       {/* Modals */}
       <AuthModal 

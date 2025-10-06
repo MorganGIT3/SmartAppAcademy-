@@ -255,7 +255,7 @@ export default function LandingPageNew() {
                   delay: 0,
                 }}
               >
-                L'avenir de l'IA commence ici
+                Connecte toi à SmartApp Academy™
               </VerticalCutReveal>
             </h1>
           </TimelineContent>

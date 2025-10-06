@@ -39,7 +39,7 @@ export function AuthModal({ open, onOpenChange, onAuthSuccess }: AuthModalProps)
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md p-0 border-0 overflow-hidden rounded-3xl">
+      <DialogContent className="sm:max-w-md p-0 border-0 overflow-hidden rounded-3xl z-[200]">
         <div className="relative w-full overflow-hidden rounded-3xl">
           {/* Magnificent Blue Background with Animation */}
           <div className="absolute inset-0 z-0">

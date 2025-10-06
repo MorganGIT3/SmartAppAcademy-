@@ -45,8 +45,7 @@ export default function LandingPageNew() {
         </h1>
         
         <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8">
-          Transformez votre entreprise avec notre plateforme IA de nouvelle génération. 
-          Automatisez, analysez et optimisez comme jamais auparavant.
+          Crée, lance et vends ton application IA no‑code à des entreprises
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">

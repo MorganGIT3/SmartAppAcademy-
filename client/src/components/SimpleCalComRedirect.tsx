@@ -49,7 +49,7 @@ export function SimpleCalComRedirect() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-5xl md:text-6xl font-bold text-white mb-6"
           >
-            Réserve ton appel de la semaine
+            Réserve tes appels de la semaine
           </motion.h1>
 
           <motion.p
@@ -72,7 +72,7 @@ export function SimpleCalComRedirect() {
             className="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-12 py-6 rounded-2xl font-bold text-xl shadow-2xl shadow-blue-500/50 hover:shadow-blue-500/70 transition-all duration-300 flex items-center gap-3 mx-auto"
           >
             <Calendar className="h-8 w-8" />
-            Booker mon appel de la semaine
+            Booker mes appels de la semaine
           </motion.button>
         </motion.div>
       </div>
@@ -106,13 +106,13 @@ export function SimpleCalComRedirect() {
             <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-6">
               <p className="text-gray-700 text-lg leading-relaxed">
                 Si vous appuyez sur <span className="font-bold text-blue-600">continuer</span>, 
-                vous n'aurez plus d'appel disponible pour cette semaine.
+                vous n'aurez plus qu'<span className="font-bold text-blue-600">1 appel</span> disponible pour cette semaine.
               </p>
               <p className="text-gray-600 mt-4">
                 Voulez-vous vraiment continuer ?
               </p>
               <p className="text-blue-600 font-semibold mt-4">
-                📅 Vous pourrez booker un nouvel appel à partir de lundi prochain
+                📅 Vous pourrez booker 2 nouveaux appels à partir de lundi prochain
               </p>
             </div>
 

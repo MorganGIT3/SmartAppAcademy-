@@ -18,9 +18,9 @@ export const useDramaticSound = () => {
     oscillator.frequency.setValueAtTime(220, audioContext.currentTime); // Note A3
     oscillator.frequency.exponentialRampToValueAtTime(440, audioContext.currentTime + 0.3); // Monte vers A4
     
-    // Envelope pour l'amplitude - crescendo puis decrescendo
+    // Envelope pour l'amplitude - crescendo puis decrescendo (volume augmenté)
     gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-    gainNode.gain.linearRampToValueAtTime(0.3, audioContext.currentTime + 0.2);
+    gainNode.gain.linearRampToValueAtTime(0.6, audioContext.currentTime + 0.2);
     gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1.0);
     
     // Ajouter une réverbération simple

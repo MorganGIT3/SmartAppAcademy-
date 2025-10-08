@@ -85,7 +85,7 @@ export function NewSidebar({ currentView, onNavigate, onLogout }: NewSidebarProp
             <Zap className="h-5 w-5 text-white" />
           </div>
           <div>
-            <h1 className="font-bold text-xl text-white">InfoScale</h1>
+            <h1 className="font-bold text-xl text-white">SmartApp Academy™</h1>
             <p className="text-xs text-gray-400">Dashboard</p>
           </div>
         </div>

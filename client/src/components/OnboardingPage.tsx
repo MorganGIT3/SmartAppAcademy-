@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { motion, useMotionTemplate, useMotionValue, animate } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
+import { useDramaticSound } from '@/hooks/useDramaticSound';
 
 interface OnboardingPageProps {
   onContinue: () => void;
@@ -11,6 +12,7 @@ const COLORS_BLUE = ["#1E67C6", "#3B82F6", "#0EA5E9", "#06B6D4"];
 
 export function OnboardingPage({ onContinue }: OnboardingPageProps) {
   const color = useMotionValue(COLORS_BLUE[0]);
+  const { playDramaticSound } = useDramaticSound();
 
   useEffect(() => {
     animate(color, COLORS_BLUE, {
@@ -20,6 +22,11 @@ export function OnboardingPage({ onContinue }: OnboardingPageProps) {
       repeatType: "mirror",
     });
   }, [color]);
+
+  const handleDashboardClick = () => {
+    playDramaticSound();
+    onContinue();
+  };
 
   const backgroundImage = useMotionTemplate`radial-gradient(125% 125% at 50% 0%, #020617 50%, ${color})`;
 
@@ -572,7 +579,7 @@ export function OnboardingPage({ onContinue }: OnboardingPageProps) {
             transition={{ duration: 0.6, delay: 0.8, type: "spring", stiffness: 200 }}
             className="relative mt-10"
           >
-            <button className="styled-button" onClick={onContinue}>
+            <button className="styled-button" onClick={handleDashboardClick}>
               <div className="bg"></div>
               <svg
                 xmlns="http://www.w3.org/2000/svg"

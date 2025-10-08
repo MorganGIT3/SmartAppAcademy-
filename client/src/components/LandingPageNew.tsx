@@ -11,26 +11,19 @@ interface AuroraBackgroundProps extends React.HTMLProps<HTMLDivElement> {
 export const AuroraBackground = ({
   className,
   children,
-  showRadialGradient = true,
+  showRadialGradient = false,
   ...props
 }: AuroraBackgroundProps) => {
   return (
     <main>
       <div
           className={cn(
-          "relative flex flex-col h-[100vh] items-center justify-center bg-zinc-50 dark:bg-zinc-900 text-slate-950 transition-bg",
+          "relative flex flex-col h-[100vh] items-center justify-center text-slate-950 transition-bg",
           className
         )}
         {...props}
       >
-        <div className="absolute inset-0 overflow-hidden">
-          <div
-          className={cn(
-              "aurora-bg absolute -inset-[10px] pointer-events-none",
-              showRadialGradient && "aurora-mask"
-            )}
-          ></div>
-        </div>
+        {/* Supprimé le fond aurora qui cachait DottedSurface */}
         {children}
       </div>
     </main>
@@ -60,11 +53,11 @@ export default function LandingPageNew({ onLogin, onSignup }: LandingPageNewProp
               </span>
             </div>
 
-            <h1 className="text-6xl md:text-8xl font-bold mb-6 text-black dark:text-white">
+            <h1 className="text-6xl md:text-8xl font-bold mb-6 text-white">
               Connecte toi à SmartApp Academy™
             </h1>
 
-            <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8">
+            <p className="text-xl md:text-2xl text-gray-300 mb-8">
               Crée, lance et vends ton application IA no‑code à des entreprises
             </p>
 
@@ -77,7 +70,7 @@ export default function LandingPageNew({ onLogin, onSignup }: LandingPageNewProp
           </button>
           <button 
             onClick={() => { playClick(); onLogin?.(); }}
-            className="bg-transparent border border-gray-600 text-black dark:text-white hover:bg-white/10 px-8 py-4 text-lg rounded-lg transition-all duration-200 cursor-pointer relative z-40"
+            className="bg-transparent border border-gray-400 text-white hover:bg-white/10 px-8 py-4 text-lg rounded-lg transition-all duration-200 cursor-pointer relative z-40"
           >
             Connection
           </button>

@@ -6,6 +6,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Eye, EyeOff } from "lucide-react";
+import { signUpUser, signInUser, resetPassword } from "@/lib/supabase";
 
 interface AuthModalProps {
   open: boolean;
@@ -15,6 +16,10 @@ interface AuthModalProps {
 
 export function AuthModal({ open, onOpenChange, onAuthSuccess }: AuthModalProps) {
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [signupData, setSignupData] = useState({ 
     email: "", 
@@ -22,19 +27,135 @@ export function AuthModal({ open, onOpenChange, onAuthSuccess }: AuthModalProps)
     confirmPassword: "", 
     name: "" 
   });
+  const [resetEmail, setResetEmail] = useState("");
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Login attempted:', loginData);
-    onAuthSuccess?.();
-    onOpenChange(false);
+    setIsLoading(true);
+    setError("");
+
+    try {
+      const { data, error } = await signInUser(loginData.email, loginData.password);
+      
+      if (error) {
+        setError("Email ou mot de passe incorrect");
+        return;
+      }
+
+      if (data.user) {
+        console.log('Connexion réussie:', data.user);
+        onAuthSuccess?.();
+        onOpenChange(false);
+      }
+    } catch (error) {
+      console.error('Erreur de connexion:', error);
+      setError("Une erreur est survenue lors de la connexion");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleSignup = (e: React.FormEvent) => {
+  const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Signup attempted:', signupData);
-    onAuthSuccess?.();
-    onOpenChange(false);
+    
+    if (signupData.password !== signupData.confirmPassword) {
+      setError("Les mots de passe ne correspondent pas");
+      return;
+    }
+
+    if (signupData.password.length < 6) {
+      setError("Le mot de passe doit contenir au moins 6 caractères");
+      return;
+    }
+
+    setIsLoading(true);
+    setError("");
+
+    try {
+      console.log('Tentative d\'inscription...');
+      const { data, error } = await signUpUser(signupData.email, signupData.password, signupData.name);
+      
+      console.log('Réponse inscription:', { data, error });
+      
+      if (error) {
+        console.error('Erreur inscription:', error);
+        
+        // Messages d'erreur plus clairs
+        let errorMessage = "Erreur lors de la création du compte";
+        if (error.message.includes('already registered')) {
+          errorMessage = "Cet email est déjà utilisé";
+        } else if (error.message.includes('Invalid email')) {
+          errorMessage = "Adresse email invalide";
+        } else if (error.message.includes('Password')) {
+          errorMessage = "Mot de passe trop faible";
+        } else {
+          errorMessage = error.message;
+        }
+        
+        setError(errorMessage);
+        return;
+      }
+
+      if (data.user) {
+        console.log('Inscription réussie:', data.user);
+        
+        // Vérifier si l'email doit être confirmé
+        if (data.user.email_confirmed_at) {
+          // Email confirmé, connexion automatique
+          onAuthSuccess?.();
+          onOpenChange(false);
+        } else {
+          // Email non confirmé, afficher message
+          setError("Un email de confirmation a été envoyé. Vérifiez votre boîte de réception.");
+          // Attendre un peu puis fermer le modal
+          setTimeout(() => {
+            onAuthSuccess?.();
+            onOpenChange(false);
+          }, 3000);
+        }
+      }
+    } catch (error) {
+      console.error('Erreur d\'inscription:', error);
+      setError("Une erreur est survenue lors de la création du compte");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleForgotPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError("");
+    setSuccess("");
+
+    try {
+      const { data, error } = await resetPassword(resetEmail);
+      
+      if (error) {
+        let errorMessage = "Erreur lors de l'envoi de l'email de réinitialisation";
+        if (error.message.includes('Invalid email')) {
+          errorMessage = "Adresse email invalide";
+        } else if (error.message.includes('rate limit')) {
+          errorMessage = "Trop de tentatives. Veuillez attendre quelques minutes";
+        } else {
+          errorMessage = error.message;
+        }
+        setError(errorMessage);
+        return;
+      }
+
+      setSuccess("Un email de réinitialisation a été envoyé à votre adresse email.");
+      setResetEmail("");
+      setTimeout(() => {
+        setShowForgotPassword(false);
+        setSuccess("");
+      }, 3000);
+    } catch (error) {
+      console.error('Erreur réinitialisation:', error);
+      setError("Une erreur est survenue lors de l'envoi de l'email");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -61,6 +182,16 @@ export function AuthModal({ open, onOpenChange, onAuthSuccess }: AuthModalProps)
             </DialogHeader>
             
             <div className="space-y-6">
+              {error && (
+                <div className="bg-red-500/20 border border-red-500/50 text-red-200 px-4 py-3 rounded-lg text-sm">
+                  {error}
+                </div>
+              )}
+              {success && (
+                <div className="bg-green-500/20 border border-green-500/50 text-green-200 px-4 py-3 rounded-lg text-sm">
+                  {success}
+                </div>
+              )}
             <Tabs defaultValue="login" className="w-full">
               <TabsList className="grid w-full grid-cols-2 mb-6 bg-white/10 border-white/20">
                 <TabsTrigger 
@@ -133,11 +264,21 @@ export function AuthModal({ open, onOpenChange, onAuthSuccess }: AuthModalProps)
                       </div>
                       <Button 
                         type="submit" 
-                        className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-medium py-2.5 rounded-lg transition-all duration-200 shadow-lg" 
+                        disabled={isLoading}
+                        className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium py-2.5 rounded-lg transition-all duration-200 shadow-lg" 
                         data-testid="button-login-submit"
                       >
-                        Se connecter
+                        {isLoading ? "Connexion..." : "Se connecter"}
                       </Button>
+                      <div className="text-center">
+                        <button
+                          type="button"
+                          onClick={() => setShowForgotPassword(true)}
+                          className="text-blue-300 hover:text-blue-200 text-sm underline transition-colors duration-200"
+                        >
+                          Mot de passe oublié ?
+                        </button>
+                      </div>
                     </form>
                   </CardContent>
                 </Card>
@@ -207,10 +348,11 @@ export function AuthModal({ open, onOpenChange, onAuthSuccess }: AuthModalProps)
                       </div>
                       <Button 
                         type="submit" 
-                        className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-medium py-2.5 rounded-lg transition-all duration-200 shadow-lg" 
+                        disabled={isLoading}
+                        className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium py-2.5 rounded-lg transition-all duration-200 shadow-lg" 
                         data-testid="button-signup-submit"
                       >
-                        Créer mon compte
+                        {isLoading ? "Création..." : "Créer mon compte"}
                       </Button>
                     </form>
                   </CardContent>
@@ -221,6 +363,88 @@ export function AuthModal({ open, onOpenChange, onAuthSuccess }: AuthModalProps)
           </div>
         </div>
       </DialogContent>
+
+      {/* Modal de réinitialisation de mot de passe */}
+      <Dialog open={showForgotPassword} onOpenChange={setShowForgotPassword}>
+        <DialogContent className="sm:max-w-md p-0 border-0 overflow-hidden rounded-3xl z-[300]">
+          <div className="relative w-full overflow-hidden rounded-3xl">
+            {/* Background */}
+            <div className="absolute inset-0 z-0">
+              <img
+                src="https://media.giphy.com/media/xJT7pzbviKNqTqF1Ps/giphy.gif"
+                alt="Tunnel animation"
+                className="w-full h-full object-cover opacity-60"
+              />
+              <div className="absolute inset-0 bg-gradient-to-b from-blue-600/80 via-blue-800/90 to-black/95" />
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 via-blue-700/30 to-blue-900/40" />
+            </div>
+
+            {/* Content */}
+            <div className="relative z-10 p-8 py-14">
+              <DialogHeader className="pb-6">
+                <DialogTitle className="text-2xl font-bold text-center text-white">
+                  Réinitialiser le mot de passe
+                </DialogTitle>
+              </DialogHeader>
+              
+              <div className="space-y-6">
+                {error && (
+                  <div className="bg-red-500/20 border border-red-500/50 text-red-200 px-4 py-3 rounded-lg text-sm">
+                    {error}
+                  </div>
+                )}
+                {success && (
+                  <div className="bg-green-500/20 border border-green-500/50 text-green-200 px-4 py-3 rounded-lg text-sm">
+                    {success}
+                  </div>
+                )}
+                
+                <Card className="border-0 shadow-none bg-transparent">
+                  <CardHeader className="px-0 pb-4">
+                    <CardTitle className="text-white text-xl font-semibold">Email de réinitialisation</CardTitle>
+                    <CardDescription className="text-white/70">
+                      Entrez votre adresse email pour recevoir un lien de réinitialisation
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="px-0">
+                    <form onSubmit={handleForgotPassword} className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="reset-email" className="text-white">Email</Label>
+                        <Input
+                          id="reset-email"
+                          type="email"
+                          placeholder="votre@email.com"
+                          value={resetEmail}
+                          onChange={(e) => setResetEmail(e.target.value)}
+                          className="bg-white/10 border-white/20 text-white placeholder-white/40 focus:bg-white/20 focus:border-white/40 rounded-2xl"
+                          required
+                        />
+                      </div>
+                      <div className="flex gap-3">
+                        <Button 
+                          type="button"
+                          variant="outline"
+                          onClick={() => setShowForgotPassword(false)}
+                          className="flex-1 border-white/20 text-white hover:bg-white/10 rounded-lg"
+                        >
+                          Annuler
+                        </Button>
+                        <Button 
+                          type="submit" 
+                          disabled={isLoading}
+                          className="flex-1 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium py-2.5 rounded-lg transition-all duration-200 shadow-lg" 
+                        >
+                          {isLoading ? "Envoi..." : "Envoyer"}
+                        </Button>
+                      </div>
+                    </form>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </Dialog>
   );
 }

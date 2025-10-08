@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -10,40 +10,41 @@ import { Dashboard } from "@/components/Dashboard";
 import { Integrations } from "@/components/Integrations";
 import { NewDashboardApp } from "@/components/NewDashboardApp";
 import { OnboardingPage } from "@/components/OnboardingPage";
+import { AdminDashboard } from "@/components/AdminDashboard";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [showOnboarding, setShowOnboarding] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+  
+  // Vérifier l'état basé sur l'URL
+  const isOnboarding = location.pathname === '/onboarding';
+  const isDashboard = location.pathname === '/dashboard';
+  const isLanding = location.pathname === '/' || location.pathname === '/landingpage';
 
   const handleLogin = () => {
-    setShowOnboarding(true);
+    navigate('/onboarding');
   };
 
   const handleOnboardingComplete = () => {
-    setShowOnboarding(false);
-    setIsLoggedIn(true);
+    navigate('/dashboard');
   };
 
   const handleLogout = () => {
-    setIsLoggedIn(false);
-    setShowOnboarding(false);
+    navigate('/landingpage');
   };
 
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <ThemeProvider defaultTheme="dark">
-          {isLoggedIn ? (
-            <NewDashboardApp onLogout={handleLogout} />
-          ) : showOnboarding ? (
-            <OnboardingPage onContinue={handleOnboardingComplete} />
-          ) : (
-            <Routes>
-              <Route path="/" element={<LandingPage onLogin={handleLogin} />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/integrations" element={<Integrations />} />
-            </Routes>
-          )}
+          <Routes>
+            <Route path="/" element={<LandingPage onLogin={handleLogin} />} />
+            <Route path="/landingpage" element={<LandingPage onLogin={handleLogin} />} />
+            <Route path="/onboarding" element={<OnboardingPage onContinue={handleOnboardingComplete} />} />
+            <Route path="/dashboard" element={<NewDashboardApp onLogout={handleLogout} />} />
+            <Route path="/integrations" element={<Integrations />} />
+            <Route path="/admin-dashboard" element={<AdminDashboard />} />
+          </Routes>
           <Toaster />
         </ThemeProvider>
       </TooltipProvider>

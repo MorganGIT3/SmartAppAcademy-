@@ -6,37 +6,8 @@ export function SimpleCalComRedirect() {
   const [showConfirmation, setShowConfirmation] = useState(false)
   const [isRedirecting, setIsRedirecting] = useState(false)
 
-  // Son agréable pour la popup
-  const playChimeSound = () => {
-    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)()
-    
-    // Jouer une séquence de notes agréables (accord majeur)
-    const playNote = (frequency: number, startTime: number, duration: number = 0.3) => {
-      const oscillator = audioContext.createOscillator()
-      const gainNode = audioContext.createGain()
-      
-      oscillator.connect(gainNode)
-      gainNode.connect(audioContext.destination)
-      
-      oscillator.frequency.value = frequency
-      oscillator.type = 'sine'
-      
-      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime + startTime)
-      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + startTime + duration)
-      
-      oscillator.start(audioContext.currentTime + startTime)
-      oscillator.stop(audioContext.currentTime + startTime + duration)
-    }
-    
-    // Jouer un joli accord (Do majeur)
-    const baseTime = 0
-    playNote(523.25, baseTime, 0.4)      // Do
-    playNote(659.25, baseTime + 0.1, 0.4) // Mi
-    playNote(783.99, baseTime + 0.2, 0.5) // Sol
-  }
 
   const handleButtonClick = () => {
-    playChimeSound()
     setShowConfirmation(true)
   }
 

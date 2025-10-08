@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Inscription - SmartApp Academy</title>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <h1>Test d'inscription</h1>
+    <form id="signupForm">
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+        </div>
+        <div>
+            <label for="password">Mot de passe:</label>
+            <input type="password" id="password" required>
+        </div>
+        <div>
+            <label for="fullName">Nom complet:</label>
+            <input type="text" id="fullName">
+        </div>
+        <button type="submit">S'inscrire</button>
+    </form>
+    
+    <div id="result"></div>
+
+    <script>
+        const supabaseUrl = 'https://kwzurhhbvfkrvhbcdhwi.supabase.co'
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt3enVyaGhidmZrcnZoYmNkaHdpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk3ODU0OTAsImV4cCI6MjA3NTM2MTQ5MH0.UmcUdRYx9IawGI93Ylqe40LyjAeYHDhrYKLwL0yAifQ'
+        
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey)
+        
+        document.getElementById('signupForm').addEventListener('submit', async (e) => {
+            e.preventDefault()
+            
+            const email = document.getElementById('email').value
+            const password = document.getElementById('password').value
+            const fullName = document.getElementById('fullName').value
+            
+            const resultDiv = document.getElementById('result')
+            resultDiv.innerHTML = 'Inscription en cours...'
+            
+            try {
+                const { data, error } = await supabase.auth.signUp({
+                    email,
+                    password,
+                    options: {
+                        data: {
+                            full_name: fullName || ''
+                        }
+                    }
+                })
+                
+                if (error) {
+                    resultDiv.innerHTML = `<p style="color: red;">Erreur: ${error.message}</p>`
+                } else {
+                    resultDiv.innerHTML = `
+                        <p style="color: green;">Inscription réussie !</p>
+                        <p>Utilisateur ID: ${data.user?.id}</p>
+                        <p>Email: ${data.user?.email}</p>
+                        <p>Vérifiez votre email pour confirmer le compte.</p>
+                    `
+                }
+            } catch (err) {
+                resultDiv.innerHTML = `<p style="color: red;">Erreur: ${err.message}</p>`
+            }
+        })
+    </script>
+</body>
+</html>

@@ -11,10 +11,22 @@ export default defineConfig({
     }
   },
   build: {
-    outDir: 'dist', // ✅ dossier de sortie du build
-    emptyOutDir: true // supprime l'ancien build avant d'en faire un nouveau
+    outDir: 'dist',
+    emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          ui: ['@radix-ui/react-dialog', '@radix-ui/react-toast'],
+          motion: ['framer-motion'],
+          icons: ['lucide-react']
+        }
+      }
+    },
+    chunkSizeWarningLimit: 1000
   },
   server: {
-    port: 3000, // optionnel : port local
+    port: 3000,
   },
+  base: './'
 })

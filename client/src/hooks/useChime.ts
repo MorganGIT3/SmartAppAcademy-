@@ -22,7 +22,7 @@ export function useChime(volume: number = 0.3) {
       master.connect(highpass);
       highpass.connect(ctx.destination);
 
-      function playTone(freq: number, start: number, duration: number, detune = 0) {
+      const playTone = (freq: number, start: number, duration: number, detune = 0) => {
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
 
@@ -40,7 +40,7 @@ export function useChime(volume: number = 0.3) {
 
         osc.start(now + start);
         osc.stop(now + start + duration);
-      }
+      };
 
       // Mélodie douce et agréable
       playTone(523.25, 0.0, 0.8, 0);    // C5

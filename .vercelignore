@@ -1,11 +1,8 @@
 # Dependencies
 node_modules
 npm-debug.log*
-
-# Build outputs
-dist
-.next
-out
+yarn-debug.log*
+yarn-error.log*
 
 # Development files
 .env.local
@@ -13,24 +10,33 @@ out
 .env.test.local
 .env.production.local
 
+# Build artifacts
+dist
+build
+
 # IDE files
 .vscode
 .idea
+*.swp
+*.swo
 
 # OS files
 .DS_Store
 Thumbs.db
 
+# Logs
+logs
+*.log
+
+# Server files (not needed for static deployment)
+server
+supabase
+drizzle.config.ts
+
 # Git
 .git
 .gitignore
 
-# Server files (not needed for static deployment)
-server
-shared
-supabase
-
 # Documentation
 *.md
-design_guidelines.md
-CALENDLY_SETUP.md
+!README.md

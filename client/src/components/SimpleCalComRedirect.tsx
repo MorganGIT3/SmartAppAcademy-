@@ -26,7 +26,7 @@ export function SimpleCalComRedirect() {
       
       {/* Message appels restants en haut à droite */}
       <div className="absolute top-6 right-6 z-20">
-        <div className="bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded-lg shadow-lg">
+        <div className="bg-gradient-to-r from-gray-800 to-black text-white px-4 py-2 rounded-lg shadow-lg">
           <span className="font-semibold">📞 Il vous reste 2 appels</span>
         </div>
       </div>

@@ -1,7 +1,7 @@
 "use client";
 import { cn } from "@/lib/utils";
 import React, { ReactNode } from "react";
-import { useClickSound } from "@/hooks/useClickSound";
+import { useAuthSound } from "@/hooks/useAuthSound";
 
 interface AuroraBackgroundProps extends React.HTMLProps<HTMLDivElement> {
   children: ReactNode;
@@ -36,7 +36,7 @@ interface LandingPageNewProps {
 }
 
 export default function LandingPageNew({ onLogin, onSignup }: LandingPageNewProps) {
-  const playClick = useClickSound(0.3);
+  const { playAuthSound } = useAuthSound();
 
   return (
         <AuroraBackground>
@@ -63,13 +63,13 @@ export default function LandingPageNew({ onLogin, onSignup }: LandingPageNewProp
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center relative z-30">
           <button 
-            onClick={() => { playClick(); onSignup?.(); }}
+            onClick={() => { playAuthSound(); onSignup?.(); }}
             className="bg-gradient-to-t from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-8 py-4 text-lg rounded-lg transition-all duration-200 shadow-lg shadow-blue-500/50 cursor-pointer relative z-40"
           >
             Je m'inscris
           </button>
           <button 
-            onClick={() => { playClick(); onLogin?.(); }}
+            onClick={() => { playAuthSound(); onLogin?.(); }}
             className="bg-transparent border border-gray-400 text-white hover:bg-white/10 px-8 py-4 text-lg rounded-lg transition-all duration-200 cursor-pointer relative z-40"
           >
             Connection

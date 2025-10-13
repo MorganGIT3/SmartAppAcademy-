@@ -99,7 +99,7 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
                     {[
                       { icon: Target, title: 'Book un Call', desc: 'Réservez votre session', view: '/book-call', delay: 0.6 },
                       { icon: BrainCog, title: 'AI Assistant', desc: 'Posez vos questions', view: '/ai-assistant', delay: 0.7 },
-                      { icon: Shield, title: 'Ressources', desc: 'Accédez aux outils', view: '/dashboard', delay: 0.8 },
+                      { icon: Shield, title: 'Formation', desc: 'Accédez à Notion', view: '/formation', delay: 0.8 },
                     ].map((card) => (
                   <motion.div 
                         key={card.title}
@@ -143,6 +143,18 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
               </div>
             );
 
+          case '/formation':
+            // Redirection simple vers Notion
+            useEffect(() => {
+              window.location.href = 'https://alive-buffer-ca8.notion.site/SmartApp-Academy-Cr-e-lance-et-vends-ton-application-IA-no-code-des-entreprises-en-30-jours-86dc953a59a14aceae127c06e675a098';
+            }, []);
+            return (
+              <div className="min-h-screen flex items-center justify-center">
+                <div className="text-center">
+                  <h1 className="text-2xl text-white">Redirection vers la formation...</h1>
+                </div>
+              </div>
+            );
 
       default:
         return (

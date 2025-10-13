@@ -4,7 +4,7 @@ export function useBassDropSound() {
   const playBassDropSound = useCallback(() => {
     try {
       const audio = new Audio('/ES_Bass Drop, Deep Sub, 60Hz - Epidemic Sound.mp3');
-      audio.volume = 0.7; // Volume modéré
+      audio.volume = 0.3; // Volume réduit
       audio.play().catch(error => {
         console.warn('Erreur lors de la lecture du son bass drop:', error);
       });

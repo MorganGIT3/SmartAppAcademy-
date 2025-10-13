@@ -1,23 +1,59 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LogOut, Target, Zap, Home, Calendar } from 'lucide-react';
+import { LogOut, Target, Zap, Home, Calendar, User, Mail, Shield, Clock, X, BrainCog } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FullScreenCalendar } from './FullScreenCalendar';
 import { CalComBookingPage } from './CalComBookingPage';
 import { SimpleCalComRedirect } from './SimpleCalComRedirect';
+import { SmartAIAssistant } from './SmartAIAssistant';
+import { supabase, getCurrentUser } from '@/lib/supabase';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 interface NewDashboardAppProps {
   onLogout?: () => void;
 }
 
+interface UserProfile {
+  id: string;
+  email: string;
+  full_name?: string;
+  created_at: string;
+  last_sign_in_at?: string;
+}
+
 export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
   const navigate = useNavigate();
   const [currentView, setCurrentView] = useState('/dashboard');
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
 
   const handleLogout = () => {
     onLogout?.();
     navigate('/');
   };
+
+  const loadUserProfile = async () => {
+    try {
+      const user = await getCurrentUser();
+      if (user) {
+        setUserProfile({
+          id: user.id,
+          email: user.email || '',
+          full_name: user.user_metadata?.full_name || user.email?.split('@')[0] || 'Utilisateur',
+          created_at: user.created_at,
+          last_sign_in_at: user.last_sign_in_at
+        });
+      }
+    } catch (error) {
+      console.error('Erreur lors du chargement du profil:', error);
+    }
+  };
+
+  useEffect(() => {
+    loadUserProfile();
+  }, []);
 
   const renderContent = () => {
     switch (currentView) {
@@ -111,6 +147,13 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
               </div>
             );
 
+          case '/ai-assistant':
+            return (
+              <div className="min-h-screen">
+                <SmartAIAssistant />
+              </div>
+            );
+
 
       default:
         return (
@@ -182,10 +225,33 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
             {currentView === '/book-call' && <div className="w-2 h-2 bg-blue-400 rounded-full ml-auto"></div>}
           </div>
 
+          {/* Smart AI Assistant */}
+          <div 
+            className={`flex items-center space-x-3 px-4 py-3 rounded-lg cursor-pointer transition-all duration-200 ${
+              currentView === '/ai-assistant' 
+                ? 'bg-blue-500/20 text-blue-300' 
+                : 'text-gray-300 hover:bg-gray-700/20 hover:text-white'
+            }`}
+            onClick={() => setCurrentView('/ai-assistant')}
+          >
+            <BrainCog className="w-5 h-5" />
+            <span className="font-medium">Smart AI Assistant</span>
+            {currentView === '/ai-assistant' && <div className="w-2 h-2 bg-blue-400 rounded-full ml-auto"></div>}
+          </div>
+
           
+          {/* Profil */}
+          <div 
+            className="flex items-center space-x-3 px-4 py-3 rounded-lg text-blue-300 hover:bg-blue-500/10 hover:text-blue-200 cursor-pointer transition-all duration-200 mt-8"
+            onClick={() => setIsProfileOpen(true)}
+          >
+            <User className="w-5 h-5" />
+            <span className="font-medium">Profil</span>
+          </div>
+
           {/* Logout */}
           <div 
-            className="flex items-center space-x-3 px-4 py-3 rounded-lg text-red-400 hover:bg-red-500/10 hover:text-red-300 cursor-pointer transition-all duration-200 mt-8"
+            className="flex items-center space-x-3 px-4 py-3 rounded-lg text-red-400 hover:bg-red-500/10 hover:text-red-300 cursor-pointer transition-all duration-200"
             onClick={onLogout}
           >
             <LogOut className="w-5 h-5" />
@@ -210,6 +276,142 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
           </AnimatePresence>
         </div>
       </main>
+
+      {/* Popup Profil */}
+      <AnimatePresence>
+        {isProfileOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={() => setIsProfileOpen(false)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="bg-gray-800/95 backdrop-blur-sm border border-gray-700 rounded-xl max-w-md w-full max-h-[90vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Card className="bg-transparent border-none">
+                <CardHeader className="flex flex-row items-center justify-between">
+                  <div>
+                    <CardTitle className="text-white flex items-center gap-2">
+                      <User className="w-5 h-5 text-blue-400" />
+                      Mon Profil
+                    </CardTitle>
+                    <CardDescription className="text-gray-400">
+                      Informations de votre compte
+                    </CardDescription>
+                  </div>
+                  <Button
+                    onClick={() => setIsProfileOpen(false)}
+                    variant="ghost"
+                    size="sm"
+                    className="text-gray-400 hover:text-white"
+                  >
+                    <X className="w-4 h-4" />
+                  </Button>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  {userProfile ? (
+                    <>
+                      {/* Avatar et nom */}
+                      <div className="flex items-center gap-4">
+                        <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold text-2xl">
+                          {userProfile.full_name?.charAt(0).toUpperCase() || 'U'}
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-bold text-white">{userProfile.full_name}</h3>
+                          <p className="text-gray-400">{userProfile.email}</p>
+                        </div>
+                      </div>
+
+                      {/* Informations détaillées */}
+                      <div className="space-y-4">
+                        <div className="bg-gray-700/30 rounded-lg p-4">
+                          <div className="flex items-center gap-2 mb-2">
+                            <Mail className="w-4 h-4 text-blue-400" />
+                            <span className="text-gray-400 text-sm">Email</span>
+                          </div>
+                          <p className="text-white font-medium">{userProfile.email}</p>
+                        </div>
+
+                        <div className="bg-gray-700/30 rounded-lg p-4">
+                          <div className="flex items-center gap-2 mb-2">
+                            <Shield className="w-4 h-4 text-green-400" />
+                            <span className="text-gray-400 text-sm">ID Utilisateur</span>
+                          </div>
+                          <p className="text-white font-mono text-sm">{userProfile.id}</p>
+                        </div>
+
+                        <div className="bg-gray-700/30 rounded-lg p-4">
+                          <div className="flex items-center gap-2 mb-2">
+                            <Clock className="w-4 h-4 text-purple-400" />
+                            <span className="text-gray-400 text-sm">Compte créé le</span>
+                          </div>
+                          <p className="text-white">
+                            {new Date(userProfile.created_at).toLocaleDateString('fr-FR', {
+                              day: 'numeric',
+                              month: 'long',
+                              year: 'numeric',
+                              hour: '2-digit',
+                              minute: '2-digit'
+                            })}
+                          </p>
+                        </div>
+
+                        {userProfile.last_sign_in_at && (
+                          <div className="bg-gray-700/30 rounded-lg p-4">
+                            <div className="flex items-center gap-2 mb-2">
+                              <Clock className="w-4 h-4 text-orange-400" />
+                              <span className="text-gray-400 text-sm">Dernière connexion</span>
+                            </div>
+                            <p className="text-white">
+                              {new Date(userProfile.last_sign_in_at).toLocaleDateString('fr-FR', {
+                                day: 'numeric',
+                                month: 'long',
+                                year: 'numeric',
+                                hour: '2-digit',
+                                minute: '2-digit'
+                              })}
+                            </p>
+                          </div>
+                        )}
+
+                        <div className="bg-gray-700/30 rounded-lg p-4">
+                          <div className="flex items-center gap-2 mb-2">
+                            <Badge className="bg-green-500 text-white">✓ Compte actif</Badge>
+                          </div>
+                          <p className="text-gray-400 text-sm">Votre compte est vérifié et actif</p>
+                        </div>
+                      </div>
+
+                      {/* Actions */}
+                      <div className="pt-4 border-t border-gray-700">
+                        <Button
+                          onClick={handleLogout}
+                          variant="outline"
+                          className="w-full border-red-500 text-red-400 hover:bg-red-500 hover:text-white"
+                        >
+                          <LogOut className="w-4 h-4 mr-2" />
+                          Se déconnecter
+                        </Button>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="text-center py-8">
+                      <User className="w-16 h-16 text-gray-600 mx-auto mb-4" />
+                      <p className="text-gray-400">Chargement du profil...</p>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </div>
   );

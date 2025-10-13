@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, useMotionTemplate, useMotionValue, animate } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { useDramaticSound } from '@/hooks/useDramaticSound';
+import { supabase, getCurrentUser } from '@/lib/supabase';
 
 interface OnboardingPageProps {
   onContinue: () => void;
@@ -13,6 +14,7 @@ const COLORS_BLUE = ["#1E67C6", "#3B82F6", "#0EA5E9", "#06B6D4"];
 export function OnboardingPage({ onContinue }: OnboardingPageProps) {
   const color = useMotionValue(COLORS_BLUE[0]);
   const { playDramaticSound } = useDramaticSound();
+  const [userFirstName, setUserFirstName] = useState<string | null>(null);
 
   useEffect(() => {
     animate(color, COLORS_BLUE, {
@@ -21,7 +23,40 @@ export function OnboardingPage({ onContinue }: OnboardingPageProps) {
       repeat: Infinity,
       repeatType: "mirror",
     });
+    
+    // Récupérer le prénom de l'utilisateur
+    loadUserFirstName();
   }, [color]);
+
+  const loadUserFirstName = async () => {
+    try {
+      const user = await getCurrentUser();
+      if (user) {
+        // Essayer d'abord user_profiles
+        const { data: profile } = await supabase
+          .from('user_profiles')
+          .select('full_name')
+          .eq('user_id', user.id)
+          .single();
+
+        if (profile?.full_name) {
+          const firstName = profile.full_name.split(' ')[0];
+          // Capitaliser la première lettre
+          const capitalizedFirstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+          setUserFirstName(capitalizedFirstName);
+          return;
+        }
+
+        // Fallback: extraire le prénom de l'email
+        const emailFirstName = user.email?.split('@')[0].split('.')[0] || '';
+        // Capitaliser la première lettre
+        const capitalizedEmailFirstName = emailFirstName.charAt(0).toUpperCase() + emailFirstName.slice(1).toLowerCase();
+        setUserFirstName(capitalizedEmailFirstName);
+      }
+    } catch (error) {
+      console.log('Erreur lors du chargement du prénom:', error);
+    }
+  };
 
   const handleDashboardClick = () => {
     playDramaticSound();
@@ -494,7 +529,7 @@ export function OnboardingPage({ onContinue }: OnboardingPageProps) {
 
           {/* Welcome Text with Custom Animation */}
           <div className="text-center mb-6">
-            {/* Première ligne - "Bienvenue !" */}
+            {/* Première ligne - "Bienvenue [Prénom] !" */}
             <motion.h1
               initial={{ 
                 opacity: 0, 
@@ -518,7 +553,7 @@ export function OnboardingPage({ onContinue }: OnboardingPageProps) {
               className="bg-gradient-to-br from-white to-gray-400 bg-clip-text text-4xl font-medium leading-tight text-transparent sm:text-6xl md:text-8xl mb-2"
               style={{ perspective: "1000px" }}
             >
-              {"Bienvenue !".split("").map((char, index) => (
+              {(userFirstName ? `Bienvenue ${userFirstName} !` : "Bienvenue !").split("").map((char, index) => (
                 <motion.span
                   key={index}
                   initial={{ opacity: 0, y: 50 }}

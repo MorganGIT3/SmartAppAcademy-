@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Eye, EyeOff } from "lucide-react";
 import { signUpUser, signInUser, resetPassword } from "@/lib/supabase";
 import { useAuthSound } from "@/hooks/useAuthSound";
+import { useUserRecognition } from "@/hooks/useUserRecognition";
 
 interface AuthModalProps {
   open: boolean;
@@ -30,6 +31,7 @@ export function AuthModal({ open, onOpenChange, onAuthSuccess }: AuthModalProps)
   });
   const [resetEmail, setResetEmail] = useState("");
   const { playAuthSound } = useAuthSound();
+  const { markUserAsLoggedIn } = useUserRecognition();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,6 +49,8 @@ export function AuthModal({ open, onOpenChange, onAuthSuccess }: AuthModalProps)
 
       if (data.user) {
         console.log('Connexion réussie:', data.user);
+        // Marquer l'utilisateur comme connecté pour la reconnaissance future
+        markUserAsLoggedIn(data.user.email || loginData.email);
         onAuthSuccess?.();
         onOpenChange(false);
       }
@@ -106,6 +110,8 @@ export function AuthModal({ open, onOpenChange, onAuthSuccess }: AuthModalProps)
         // Vérifier si l'email doit être confirmé
         if (data.user.email_confirmed_at) {
           // Email confirmé, connexion automatique
+          // Marquer l'utilisateur comme connecté pour la reconnaissance future
+          markUserAsLoggedIn(data.user.email || signupData.email);
           onAuthSuccess?.();
           onOpenChange(false);
         } else {

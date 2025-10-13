@@ -201,7 +201,7 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
               whileTap={{ scale: 0.95 }}
             >
               <img 
-                src="/ChatGPT Image 12 oct. 2025, 19_22_29.png" 
+                src="/logo.png" 
                 alt="SmartApp Academy Logo" 
                 className="w-full h-full object-cover scale-110"
               />

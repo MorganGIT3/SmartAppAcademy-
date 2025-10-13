@@ -951,3 +951,210 @@ export const deleteCallFromHistory = async (callId: string): Promise<boolean> =>
     return false
   }
 }
+
+// ===== FONCTIONS CHATBOT IA =====
+
+// Interface pour les conversations IA
+export interface AIConversation {
+  id: string
+  user_id: string
+  title: string | null
+  created_at: string
+  updated_at: string
+}
+
+// Interface pour les messages IA
+export interface AIMessage {
+  id: string
+  conversation_id: string
+  role: 'system' | 'user' | 'assistant'
+  content: string
+  created_at: string
+}
+
+// Interface pour le system prompt
+export interface AISystemPrompt {
+  id: string
+  name: string
+  prompt: string
+  is_active: boolean
+  created_at: string
+  updated_at: string
+}
+
+// Récupérer toutes les conversations d'un utilisateur
+export const getAIConversations = async (): Promise<AIConversation[]> => {
+  try {
+    const user = await getCurrentUser()
+    if (!user) {
+      throw new Error('Utilisateur non connecté')
+    }
+
+    const { data, error } = await supabase
+      .from('conversations')
+      .select('*')
+      .eq('user_id', user.id)
+      .order('created_at', { ascending: false })
+
+    if (error) {
+      console.error('Erreur lors de la récupération des conversations:', error)
+      throw error
+    }
+
+    return data || []
+  } catch (error) {
+    console.error('Erreur dans getAIConversations:', error)
+    return []
+  }
+}
+
+// Récupérer les messages d'une conversation
+export const getAIMessages = async (conversationId: string): Promise<AIMessage[]> => {
+  try {
+    const user = await getCurrentUser()
+    if (!user) {
+      throw new Error('Utilisateur non connecté')
+    }
+
+    const { data, error } = await supabase
+      .from('messages')
+      .select('*')
+      .eq('conversation_id', conversationId)
+      .order('created_at', { ascending: true })
+
+    if (error) {
+      console.error('Erreur lors de la récupération des messages:', error)
+      throw error
+    }
+
+    return data || []
+  } catch (error) {
+    console.error('Erreur dans getAIMessages:', error)
+    return []
+  }
+}
+
+// Envoyer un message à l'IA
+export const sendAIMessage = async (
+  userMessage: string,
+  conversationId?: string
+): Promise<{ success: boolean; conversationId?: string; answer?: string; error?: string }> => {
+  try {
+    const user = await getCurrentUser()
+    if (!user) {
+      throw new Error('Utilisateur non connecté')
+    }
+
+    // Récupérer la session
+    const { data: { session } } = await supabase.auth.getSession()
+    if (!session) {
+      throw new Error('Session expirée')
+    }
+
+    // Appeler la Edge Function
+    const response = await fetch(
+      `${supabaseUrl}/functions/v1/ai-answer`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify({
+          conversationId: conversationId,
+          userMessage: userMessage,
+        }),
+      }
+    )
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}))
+      throw new Error(errorData.error || 'Erreur lors de la communication avec l\'IA')
+    }
+
+    const data = await response.json()
+
+    return {
+      success: true,
+      conversationId: data.conversationId,
+      answer: data.answer
+    }
+  } catch (error) {
+    console.error('Erreur dans sendAIMessage:', error)
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Erreur inconnue'
+    }
+  }
+}
+
+// Supprimer une conversation
+export const deleteAIConversation = async (conversationId: string): Promise<boolean> => {
+  try {
+    const user = await getCurrentUser()
+    if (!user) {
+      throw new Error('Utilisateur non connecté')
+    }
+
+    const { error } = await supabase
+      .from('conversations')
+      .delete()
+      .eq('id', conversationId)
+      .eq('user_id', user.id)
+
+    if (error) {
+      console.error('Erreur lors de la suppression de la conversation:', error)
+      throw error
+    }
+
+    return true
+  } catch (error) {
+    console.error('Erreur dans deleteAIConversation:', error)
+    return false
+  }
+}
+
+// Récupérer le system prompt actif
+export const getActiveSystemPrompt = async (): Promise<AISystemPrompt | null> => {
+  try {
+    const { data, error } = await supabase
+      .from('ai_system_prompts')
+      .select('*')
+      .eq('is_active', true)
+      .limit(1)
+      .single()
+
+    if (error) {
+      console.error('Erreur lors de la récupération du system prompt:', error)
+      return null
+    }
+
+    return data
+  } catch (error) {
+    console.error('Erreur dans getActiveSystemPrompt:', error)
+    return null
+  }
+}
+
+// Mettre à jour le system prompt (admin uniquement)
+export const updateSystemPrompt = async (promptId: string, newPrompt: string): Promise<boolean> => {
+  try {
+    const { error } = await supabase
+      .from('ai_system_prompts')
+      .update({ 
+        prompt: newPrompt,
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', promptId)
+
+    if (error) {
+      console.error('Erreur lors de la mise à jour du system prompt:', error)
+      throw error
+    }
+
+    return true
+  } catch (error) {
+    console.error('Erreur dans updateSystemPrompt:', error)
+    return false
+  }
+}

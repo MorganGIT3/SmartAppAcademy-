@@ -41,8 +41,23 @@ export function Dashboard() {
       <div className="flex-1 p-0">
           {/* Header */}
           <div className="p-8 mb-8">
-            <h1 className="text-4xl font-bold text-white mb-2">Dashboard</h1>
-            <p className="text-gray-400">Bienvenue dans votre espace SmartApp Academy™</p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="inline-block mb-4"
+            >
+              <h1 className="text-4xl font-medium tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white/90 to-white/40 pb-2">
+                Dashboard
+              </h1>
+              <motion.div 
+                className="h-px bg-gradient-to-r from-transparent via-blue-400/40 to-transparent"
+                initial={{ width: 0, opacity: 0 }}
+                animate={{ width: "100%", opacity: 1 }}
+                transition={{ delay: 0.5, duration: 0.8 }}
+              />
+            </motion.div>
+            <p className="text-white/60">Bienvenue dans votre espace SmartApp Academy™</p>
           </div>
 
           {/* Hero Section */}

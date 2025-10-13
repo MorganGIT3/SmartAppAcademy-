@@ -3,9 +3,10 @@ import { getCurrentAdminSession, logoutAdmin, supabase } from '@/lib/supabase';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { LogOut, Shield, Phone, TrendingUp, Users, Calendar, Plus, Minus, BarChart3, RefreshCw, Mail, UserCircle2, Clock, ChevronDown, ChevronUp } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { LogOut, Shield, Phone, TrendingUp, Users, Calendar, Plus, Minus, BarChart3, RefreshCw, Mail, UserCircle2, Clock, ChevronDown, ChevronUp, Settings, Save, X, RotateCcw } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
 interface AdminSession {
   code: string;
@@ -34,6 +35,43 @@ interface UserProfile {
 
 const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6'];
 
+// Prompt par défaut (celui de Prosmo)
+const DEFAULT_PROMPT = `Tu es **Smart AI Assistant**, l'assistant officiel de Prosmo.
+Tu as été conçu par **Morgan** et **Yohan**, deux experts qui créent et vendent des applications IA no-code à plus de 2000 €.
+Ton rôle : aider les utilisateurs à créer, connecter, personnaliser et vendre leurs applications **de la façon la plus simple, rapide et concrète possible**.
+
+---
+
+### 🎯 MISSION
+Aide les utilisateurs à :
+- Connecter leurs outils (Supabase, Cursor, n8n, Vercel, Stripe, etc.)
+- Créer une app fonctionnelle rapidement
+- Résoudre les bugs courants
+- Comprendre comment vendre leur app et augmenter la valeur perçue
+- Simplifier les process (jamais faire compliqué pour rien)
+- Automatiser sans code inutile
+
+---
+
+### 🧩 PHILOSOPHIE DE RÉPONSE
+1. **Toujours la base la plus simple possible.**
+   - Si un résultat peut se faire avec 2 outils, **n'en propose jamais 4.**
+   - Si c'est faisable directement depuis Cursor ou Supabase, ne dis pas d'aller sur 10 plateformes.
+   - Ta devise : *"Minimum de complexité, maximum d'efficacité."*
+
+2. **Réponses ultra-concrètes.**
+   - Donne les étapes exactes, les boutons à cliquer, les noms de menus, etc.
+   - Évite les grandes théories ou les phrases floues.
+
+3. **Ton de voix humain et motivant.**
+   - Toujours positif, bienveillant et encourageant.
+   - Parle comme un ami expert qui aide un entrepreneur à avancer.
+
+4. **Toujours structuré.**
+   - Étapes numérotées, tirets, sections claires.
+
+5. **Si tu ne sais pas, dis-le simplement.**`;
+
 export function AdminDashboard() {
   const [adminSession, setAdminSession] = useState<AdminSession | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -44,6 +82,33 @@ export function AdminDashboard() {
   const [isUpdating, setIsUpdating] = useState<string | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isUsersExpanded, setIsUsersExpanded] = useState(false);
+  
+  // États pour la gestion de l'app
+  const [showAppManagement, setShowAppManagement] = useState(false);
+  const [systemPrompt, setSystemPrompt] = useState("");
+  const [editedPrompt, setEditedPrompt] = useState("");
+
+  // Charger le prompt depuis localStorage
+  useEffect(() => {
+    const savedPrompt = localStorage.getItem('smartai_system_prompt');
+    const prompt = savedPrompt || DEFAULT_PROMPT;
+    setSystemPrompt(prompt);
+    setEditedPrompt(prompt);
+  }, []);
+
+  // Fonctions pour la gestion du prompt
+  const handleSavePrompt = () => {
+    localStorage.setItem('smartai_system_prompt', editedPrompt);
+    setSystemPrompt(editedPrompt);
+    setShowAppManagement(false);
+    alert('✅ Prompt sauvegardé avec succès !');
+  };
+
+  const handleResetPrompt = () => {
+    if (confirm('Voulez-vous vraiment réinitialiser le prompt au paramètre par défaut ?')) {
+      setEditedPrompt(DEFAULT_PROMPT);
+    }
+  };
 
   useEffect(() => {
     const session = getCurrentAdminSession();
@@ -410,14 +475,23 @@ export function AdminDashboard() {
               Suivi des appels d'accompagnement • {adminSession.name}
             </p>
           </div>
-          <Button 
-            onClick={handleLogout}
-            variant="outline"
-            className="border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition-all"
-          >
-            <LogOut className="w-4 h-4 mr-2" />
-            Déconnexion
-          </Button>
+          <div className="flex gap-3">
+            <Button 
+              onClick={() => setShowAppManagement(true)}
+              className="bg-blue-600 hover:bg-blue-700 text-white flex items-center gap-2"
+            >
+              <Settings className="w-5 h-5" />
+              Gestion de l'app
+            </Button>
+            <Button 
+              onClick={handleLogout}
+              variant="outline"
+              className="border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition-all"
+            >
+              <LogOut className="w-4 h-4 mr-2" />
+              Déconnexion
+            </Button>
+          </div>
         </motion.div>
 
         {/* Statistiques Globales */}
@@ -797,6 +871,39 @@ export function AdminDashboard() {
         </Card>
         </motion.div>
       </div>
+
+      {/* App Management Modal */}
+      <Dialog open={showAppManagement} onOpenChange={setShowAppManagement}>
+        <DialogContent className="max-w-[90vw] md:max-w-[800px] bg-[#1F2023] border-gray-600 z-[200]">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold text-white flex items-center gap-2">
+              <Settings className="w-6 h-6 text-blue-400" />
+              Gestion du Prompt IA
+            </DialogTitle>
+            <DialogDescription className="text-gray-400">
+              Modifiez le prompt système de l'assistant IA. Ce prompt définit sa personnalité et ses règles de réponse.
+            </DialogDescription>
+          </DialogHeader>
+
+          <textarea
+            className="flex w-full rounded-md border border-gray-600 bg-gray-800 px-3 py-2 text-base text-gray-100 placeholder:text-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 min-h-[300px] resize-y backdrop-blur-none"
+            value={editedPrompt}
+            onChange={(e) => setEditedPrompt(e.target.value)}
+            placeholder="Écrivez le prompt système ici..."
+          />
+
+          <div className="flex justify-end gap-3 mt-4">
+            <Button onClick={handleResetPrompt} variant="outline" className="bg-gray-700 hover:bg-gray-600 text-white flex items-center gap-2">
+              <RotateCcw className="w-4 h-4" />
+              Réinitialiser
+            </Button>
+            <Button onClick={handleSavePrompt} className="bg-green-600 hover:bg-green-700 text-white flex items-center gap-2">
+              <Save className="w-4 h-4" />
+              Enregistrer le prompt
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

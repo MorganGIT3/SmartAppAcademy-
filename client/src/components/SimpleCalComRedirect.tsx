@@ -39,47 +39,58 @@ export function SimpleCalComRedirect() {
           transition={{ duration: 0.6 }}
           className="text-center max-w-2xl"
         >
-          {/* Icône animée */}
+          {/* Icône animée moderne */}
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ duration: 0.5, type: "spring", bounce: 0.5 }}
-            className="mb-8 mx-auto w-32 h-32 bg-gradient-to-br from-blue-500 to-blue-600 rounded-3xl flex items-center justify-center shadow-2xl shadow-blue-500/50"
+            whileHover={{ scale: 1.05, rotate: 5 }}
+            className="mb-8 mx-auto w-24 h-24 backdrop-blur-2xl bg-white/[0.02] border border-white/[0.05] rounded-2xl flex items-center justify-center shadow-2xl shadow-blue-500/20 relative overflow-hidden group"
           >
-            <Phone className="h-16 w-16 text-white" />
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <Phone className="h-12 w-12 text-blue-400 relative z-10" />
           </motion.div>
 
-          {/* Titre */}
-          <motion.h1
+          {/* Titre avec effet moderne */}
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-5xl md:text-6xl font-bold text-white mb-6"
+            transition={{ delay: 0.2, duration: 0.5 }}
+            className="inline-block mb-8"
           >
-            Réserve tes appels de la semaine
-          </motion.h1>
+            <h1 className="text-4xl md:text-5xl font-medium tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white/90 to-white/40 pb-2">
+              Réserve tes appels de la semaine
+            </h1>
+            <motion.div 
+              className="h-px bg-gradient-to-r from-transparent via-blue-400/40 to-transparent"
+              initial={{ width: 0, opacity: 0 }}
+              animate={{ width: "100%", opacity: 1 }}
+              transition={{ delay: 0.5, duration: 0.8 }}
+            />
+          </motion.div>
 
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-xl text-gray-300 mb-12"
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="text-lg text-white/60 mb-12"
           >
             Un moment privilégié pour échanger et avancer ensemble
           </motion.p>
 
-          {/* Bouton principal */}
+          {/* Bouton principal moderne */}
           <motion.button
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.4, type: "spring" }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            transition={{ duration: 0.6, delay: 0.5, type: "spring" }}
+            whileHover={{ scale: 1.02, y: -4 }}
+            whileTap={{ scale: 0.98 }}
             onClick={handleButtonClick}
-            className="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-12 py-6 rounded-2xl font-bold text-xl shadow-2xl shadow-blue-500/50 hover:shadow-blue-500/70 transition-all duration-300 flex items-center gap-3 mx-auto"
+            className="relative backdrop-blur-2xl bg-blue-500/20 border border-blue-400/30 text-white px-10 py-5 rounded-2xl font-semibold text-lg shadow-2xl shadow-blue-500/20 hover:shadow-blue-500/40 hover:border-blue-400/50 transition-all duration-300 flex items-center gap-3 mx-auto group overflow-hidden"
           >
-            <Calendar className="h-8 w-8" />
-            Booker mes appels de la semaine
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <Calendar className="h-6 w-6 text-blue-400 relative z-10 group-hover:rotate-12 transition-transform duration-300" />
+            <span className="relative z-10">Booker mes appels de la semaine</span>
           </motion.button>
         </motion.div>
       </div>

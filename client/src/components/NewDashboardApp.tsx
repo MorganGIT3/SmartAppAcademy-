@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LogOut, Target, Zap, Home, Calendar, User, Mail, Shield, Clock, X, BrainCog } from 'lucide-react';
+import { LogOut, Target, Home, Calendar, User, Mail, Shield, Clock, X, BrainCog } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FullScreenCalendar } from './FullScreenCalendar';
 import { CalComBookingPage } from './CalComBookingPage';
 import { SimpleCalComRedirect } from './SimpleCalComRedirect';
-import { SmartAIAssistant } from './SmartAIAssistant';
+import { SmartAIAssistantSimple as SmartAIAssistant } from './SmartAIAssistantSimple';
 import { supabase, getCurrentUser } from '@/lib/supabase';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -65,77 +65,66 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
               >
-        <div className="text-center max-w-4xl mx-auto px-8">
-                  {/* Titre principal avec animation simple */}
-                  <motion.h1 
-                    className="text-6xl md:text-8xl font-bold text-white mb-8 bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 bg-clip-text text-transparent"
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.2 }}
-                  >
-                    Dashboard
-                  </motion.h1>
-                  
-                  {/* Description avec animation simple */}
-                  <motion.p 
-                    className="text-xl md:text-2xl text-gray-300 mb-12 max-w-2xl mx-auto"
+        <div className="text-center max-w-5xl mx-auto px-8">
+                  {/* Titre principal moderne */}
+                  <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.4 }}
+                    transition={{ delay: 0.2, duration: 0.5 }}
+                    className="inline-block mb-8"
+                  >
+                    <h1 className="text-6xl md:text-8xl font-medium tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white/90 to-white/40 pb-2">
+                    Dashboard
+                    </h1>
+                    <motion.div 
+                      className="h-px bg-gradient-to-r from-transparent via-blue-400/40 to-transparent"
+                      initial={{ width: 0, opacity: 0 }}
+                      animate={{ width: "100%", opacity: 1 }}
+                      transition={{ delay: 0.5, duration: 0.8 }}
+                    />
+                  </motion.div>
+                  
+                  {/* Description moderne */}
+                  <motion.p 
+                    className="text-xl text-white/60 mb-16 max-w-2xl mx-auto"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.4, duration: 0.5 }}
                   >
                     Bienvenue dans votre espace SmartApp Academy™
                   </motion.p>
                   
-                  {/* Card de fonctionnalité avec animation simple */}
+                  {/* Cards modernes */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+                    {[
+                      { icon: Target, title: 'Book un Call', desc: 'Réservez votre session', view: '/book-call', delay: 0.6 },
+                      { icon: BrainCog, title: 'AI Assistant', desc: 'Posez vos questions', view: '/ai-assistant', delay: 0.7 },
+                      { icon: Shield, title: 'Ressources', desc: 'Accédez aux outils', view: '/dashboard', delay: 0.8 },
+                    ].map((card) => (
                   <motion.div 
-                    className="flex justify-center mt-16"
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.6, delay: 0.6 }}
-                  >
-                    <motion.div 
-                      className="bg-gradient-to-br from-blue-500/20 to-blue-600/20 border border-blue-500/30 rounded-2xl p-8 hover:border-blue-500/50 transition-all duration-200 max-w-md"
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      <motion.div 
-                        className="flex items-center space-x-3 mb-4"
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.4, delay: 0.8 }}
-                      >
-                        <motion.div 
-                          className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center"
-                          whileHover={{ rotate: 5 }}
-                          transition={{ duration: 0.2 }}
-                        >
-                          <Calendar className="w-6 h-6 text-blue-400" />
-                        </motion.div>
-                        <h3 className="text-xl font-bold text-white">Booker un Call</h3>
-                      </motion.div>
-                      
-                      <motion.p 
-                        className="text-gray-300 mb-6"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.4, delay: 1 }}
-                      >
-                        Réservez un appel stratégique avec nos experts
-                      </motion.p>
-                      
-                      <motion.button 
-                        onClick={() => setCurrentView('/book-call')}
-                        className="w-full py-4 px-8 bg-gray-600 hover:bg-gray-700 text-white rounded-xl hover:shadow-lg transition-all duration-300 font-bold text-lg"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        initial={{ opacity: 0, y: 10 }}
+                        key={card.title}
+                        initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.4, delay: 1.2 }}
+                        transition={{ delay: card.delay, duration: 0.5 }}
+                        whileHover={{ y: -8, scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={() => setCurrentView(card.view)}
+                        className="backdrop-blur-2xl bg-white/[0.02] rounded-2xl border border-white/[0.05] p-6 hover:border-blue-400/30 transition-all duration-300 cursor-pointer group"
                       >
-                        Réserve ton appel de semaine
-                      </motion.button>
+                        <div className="flex items-center justify-center mb-4">
+                          <div className="w-14 h-14 bg-gradient-to-br from-blue-500/20 to-blue-600/20 rounded-xl flex items-center justify-center group-hover:shadow-lg group-hover:shadow-blue-500/20 transition-all duration-300">
+                            <card.icon className="w-7 h-7 text-blue-400" />
+                          </div>
+                        </div>
+                        <h3 className="text-lg font-semibold text-white mb-2">
+                          {card.title}
+                        </h3>
+                        <p className="text-sm text-white/50">
+                          {card.desc}
+                        </p>
                     </motion.div>
-                  </motion.div>
+                    ))}
+                  </div>
                 </div>
               </motion.div>
             );
@@ -174,91 +163,164 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
   // Dashboard simplifié - pas besoin de variables complexes
 
   return (
-    <div className="min-h-screen w-full bg-black relative flex" style={{ border: 'none !important' }}>
-      {/* Background harmonisé avec la sidebar */}
-      <div className="absolute inset-0 bg-gradient-to-b from-blue-900 via-blue-800 to-black z-0"></div>
-      
+    <div className="min-h-screen w-full bg-[#0A0A0B] relative flex overflow-hidden">
+      {/* Effets de fond animés */}
+      <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full mix-blend-normal filter blur-[128px] animate-pulse" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-indigo-500/10 rounded-full mix-blend-normal filter blur-[128px] animate-pulse" style={{ animationDelay: '700ms' }} />
+        <div className="absolute top-1/4 right-1/3 w-64 h-64 bg-purple-500/10 rounded-full mix-blend-normal filter blur-[96px] animate-pulse" style={{ animationDelay: '1000ms' }} />
+      </div>
 
-          {/* Sidebar fixe */}
-          <div className="w-64 bg-gradient-to-b from-blue-900 to-black fixed left-0 top-0 h-full overflow-hidden z-10">
+      {/* Sidebar moderne */}
+      <motion.div 
+        className="w-64 fixed left-0 top-0 h-full z-20 backdrop-blur-2xl bg-white/[0.02] border-r border-white/[0.05]"
+        initial={{ x: -100, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+      >
 
         {/* Logo Header */}
-        <div className="relative z-10 p-6">
+        <motion.div 
+          className="p-6 border-b border-white/[0.05]"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
+        >
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg flex items-center justify-center shadow-lg shadow-blue-500/50">
-              <Zap className="w-6 h-6 text-white" />
-            </div>
+            <motion.div 
+              className="w-14 h-14 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/30 overflow-hidden"
+              whileHover={{ scale: 1.05, rotate: 5 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <img 
+                src="/ChatGPT Image 12 oct. 2025, 19_22_29.png" 
+                alt="SmartApp Academy Logo" 
+                className="w-full h-full object-cover scale-110"
+              />
+            </motion.div>
             <div>
-              <h1 className="text-2xl font-bold text-white">SmartApp</h1>
-              <p className="text-sm text-blue-300">Academy™</p>
+              <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-white/60">
+                SmartApp
+              </h1>
+              <p className="text-xs text-blue-400/80">Academy™</p>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Navigation Items */}
-        <nav className="relative z-10 p-4 space-y-2">
-          {/* Dashboard */}
-          <div 
-            className={`flex items-center space-x-3 px-4 py-3 rounded-lg cursor-pointer transition-all duration-200 ${
-              currentView === '/dashboard' 
-                ? 'bg-blue-500/20 text-blue-300' 
-                : 'text-gray-300 hover:bg-gray-700/20 hover:text-white'
-            }`}
-            onClick={() => setCurrentView('/dashboard')}
-          >
-            <Home className="w-5 h-5" />
-            <span className="font-medium">Dashboard</span>
-            {currentView === '/dashboard' && <div className="w-2 h-2 bg-blue-400 rounded-full ml-auto"></div>}
+        <nav className="p-4 space-y-1">
+          {[
+            { icon: Home, label: 'Dashboard', view: '/dashboard' },
+            { icon: Target, label: 'Book un Call', view: '/book-call' },
+            { icon: BrainCog, label: 'Smart AI Assistant', view: '/ai-assistant' },
+          ].map((item, index) => (
+            <motion.div
+              key={item.view}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.3 + index * 0.1, duration: 0.4 }}
+              whileHover={{ x: 4 }}
+              whileTap={{ scale: 0.98 }}
+              className={`flex items-center space-x-3 px-4 py-3 rounded-xl cursor-pointer transition-all duration-300 relative group overflow-hidden ${
+                currentView === item.view
+                  ? 'text-white'
+                  : 'text-white/60 hover:text-white hover:bg-white/[0.05]'
+              }`}
+              onClick={() => setCurrentView(item.view)}
+            >
+              {/* Effet de fond glassmorphism pour l'item actif */}
+              {currentView === item.view && (
+                <>
+                  <motion.div
+                    className="absolute inset-0 backdrop-blur-xl bg-gradient-to-r from-blue-500/20 via-blue-400/10 to-transparent rounded-xl"
+                    layoutId="activeNav"
+                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                  />
+                  {/* Bordure lumineuse */}
+                  <motion.div
+                    className="absolute inset-0 rounded-xl border border-blue-400/30"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </>
+              )}
+              
+              {/* Icône avec effet de glow quand actif */}
+              <div className={`relative z-10 ${currentView === item.view ? 'text-blue-400' : ''}`}>
+                <item.icon className="w-5 h-5" />
+                {currentView === item.view && (
+                  <motion.div
+                    className="absolute inset-0 bg-blue-400/20 rounded-full blur-md"
+                    animate={{
+                      scale: [1, 1.3, 1],
+                      opacity: [0.3, 0.6, 0.3],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                  />
+                )}
           </div>
 
-          {/* Book un Call */}
-          <div 
-            className={`flex items-center space-x-3 px-4 py-3 rounded-lg cursor-pointer transition-all duration-200 ${
-              currentView === '/book-call' 
-                ? 'bg-blue-500/20 text-blue-300' 
-                : 'text-gray-300 hover:bg-gray-700/20 hover:text-white'
-            }`}
-            onClick={() => setCurrentView('/book-call')}
-          >
-            <Target className="w-5 h-5" />
-            <span className="font-medium">Book un Call</span>
-            {currentView === '/book-call' && <div className="w-2 h-2 bg-blue-400 rounded-full ml-auto"></div>}
-          </div>
+              <span className="font-medium text-sm relative z-10">{item.label}</span>
+            </motion.div>
+          ))}
 
-          {/* Smart AI Assistant */}
-          <div 
-            className={`flex items-center space-x-3 px-4 py-3 rounded-lg cursor-pointer transition-all duration-200 ${
-              currentView === '/ai-assistant' 
-                ? 'bg-blue-500/20 text-blue-300' 
-                : 'text-gray-300 hover:bg-gray-700/20 hover:text-white'
-            }`}
-            onClick={() => setCurrentView('/ai-assistant')}
-          >
-            <BrainCog className="w-5 h-5" />
-            <span className="font-medium">Smart AI Assistant</span>
-            {currentView === '/ai-assistant' && <div className="w-2 h-2 bg-blue-400 rounded-full ml-auto"></div>}
-          </div>
-
+          <div className="h-px bg-white/[0.05] my-4" />
           
           {/* Profil */}
-          <div 
-            className="flex items-center space-x-3 px-4 py-3 rounded-lg text-blue-300 hover:bg-blue-500/10 hover:text-blue-200 cursor-pointer transition-all duration-200 mt-8"
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.6, duration: 0.4 }}
+            whileHover={{ x: 4 }}
+            whileTap={{ scale: 0.98 }}
+            className="flex items-center space-x-3 px-4 py-3 rounded-xl text-white/60 hover:text-white hover:bg-white/[0.05] cursor-pointer transition-all duration-200"
             onClick={() => setIsProfileOpen(true)}
           >
             <User className="w-5 h-5" />
-            <span className="font-medium">Profil</span>
-          </div>
+            <span className="font-medium text-sm">Profil</span>
+          </motion.div>
 
           {/* Logout */}
-          <div 
-            className="flex items-center space-x-3 px-4 py-3 rounded-lg text-red-400 hover:bg-red-500/10 hover:text-red-300 cursor-pointer transition-all duration-200"
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.7, duration: 0.4 }}
+            whileHover={{ x: 4 }}
+            whileTap={{ scale: 0.98 }}
+            className="flex items-center space-x-3 px-4 py-3 rounded-xl text-red-400/80 hover:text-red-400 hover:bg-red-500/10 cursor-pointer transition-all duration-200"
             onClick={onLogout}
           >
             <LogOut className="w-5 h-5" />
-            <span className="font-medium">Logout</span>
-          </div>
+            <span className="font-medium text-sm">Logout</span>
+          </motion.div>
         </nav>
-      </div>
+
+        {/* Ligne LED animée sur le bord droit de la sidebar */}
+        <motion.div 
+          className="absolute right-0 top-0 bottom-0 w-[2px] bg-gradient-to-b from-transparent via-blue-400/60 to-transparent"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8, duration: 1 }}
+        >
+          {/* Effet de lumière qui se déplace */}
+          <motion.div
+            className="absolute w-full h-32 bg-gradient-to-b from-transparent via-blue-400 to-transparent blur-sm"
+            animate={{
+              y: [0, "calc(100vh - 128px)", 0],
+            }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        </motion.div>
+      </motion.div>
 
       {/* Main Content */}
           <main className="flex-1 relative z-20 ml-64" style={{ border: 'none !important' }}>

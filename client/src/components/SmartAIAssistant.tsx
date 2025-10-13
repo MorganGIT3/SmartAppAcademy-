@@ -818,8 +818,9 @@ export function SmartAIAssistant() {
   const [messages, setMessages] = React.useState<Array<{ id: string; content: string; sender: 'user' | 'ai'; timestamp: Date }>>([]);
   const [isLoading, setIsLoading] = React.useState(false);
   const [input, setInput] = React.useState("");
+  const [conversationId, setConversationId] = React.useState<string | null>(null);
 
-  const handleSendMessage = (message: string, files?: File[]) => {
+  const handleSendMessage = async (message: string, files?: File[]) => {
     const newMessage = {
       id: Date.now().toString(),
       content: message,
@@ -830,17 +831,69 @@ export function SmartAIAssistant() {
     setMessages(prev => [...prev, newMessage]);
     setIsLoading(true);
     
-    // Simulate AI response
-    setTimeout(() => {
+    try {
+      // Importer supabase depuis le module
+      const { supabase } = await import('../lib/supabase');
+      
+      // Récupérer le token de session
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (!session) {
+        throw new Error('Vous devez être connecté pour utiliser le chatbot');
+      }
+
+      // Appeler l'Edge Function
+      const response = await fetch(
+        `https://kwzurhhbvfkrvhbcdhwi.supabase.co/functions/v1/ai-answer`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${session.access_token}`,
+          },
+          body: JSON.stringify({
+            conversationId: conversationId,
+            userMessage: message,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || 'Erreur lors de la communication avec l\'IA');
+      }
+
+      const data = await response.json();
+      
+      // Mettre à jour l'ID de conversation si c'est la première fois
+      if (data.conversationId && !conversationId) {
+        setConversationId(data.conversationId);
+      }
+
+      // Ajouter la réponse de l'IA
       const aiResponse = {
         id: (Date.now() + 1).toString(),
-        content: `Merci pour votre message: "${message}". Je suis votre assistant IA SmartApp Academy™. Comment puis-je vous aider aujourd'hui ?`,
+        content: data.answer,
         sender: 'ai' as const,
         timestamp: new Date()
       };
+      
       setMessages(prev => [...prev, aiResponse]);
+    } catch (error) {
+      console.error('Erreur lors de l\'envoi du message:', error);
+      
+      // Afficher un message d'erreur à l'utilisateur
+      const errorMessage = {
+        id: (Date.now() + 1).toString(),
+        content: `Désolé, une erreur est survenue: ${error instanceof Error ? error.message : 'Erreur inconnue'}. Veuillez réessayer.`,
+        sender: 'ai' as const,
+        timestamp: new Date()
+      };
+      
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
       setIsLoading(false);
-    }, 2000);
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {

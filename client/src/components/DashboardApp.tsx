@@ -17,8 +17,23 @@ export function DashboardApp({ onLogout }: DashboardAppProps) {
       case '/book-call':
         return (
           <div className="space-y-6">
-            <h1 className="text-3xl font-bold text-white">Booker un Call</h1>
-            <p className="text-gray-300">Planifiez un appel avec notre équipe d'experts pour accélérer votre croissance.</p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="inline-block mb-4"
+            >
+              <h1 className="text-3xl font-medium tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white/90 to-white/40 pb-2">
+                Booker un Call
+              </h1>
+              <motion.div 
+                className="h-px bg-gradient-to-r from-transparent via-blue-400/40 to-transparent"
+                initial={{ width: 0, opacity: 0 }}
+                animate={{ width: "100%", opacity: 1 }}
+                transition={{ delay: 0.5, duration: 0.8 }}
+              />
+            </motion.div>
+            <p className="text-white/60">Planifiez un appel avec notre équipe d'experts pour accélérer votre croissance.</p>
             
             {/* Call Booking Section */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -113,8 +128,23 @@ export function DashboardApp({ onLogout }: DashboardAppProps) {
       case '/formation':
         return (
           <div className="space-y-6">
-            <h1 className="text-3xl font-bold text-white">Formations</h1>
-            <p className="text-gray-300">Accédez à nos formations premium pour maîtriser le marketing digital et l'IA.</p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="inline-block mb-4"
+            >
+              <h1 className="text-3xl font-medium tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white/90 to-white/40 pb-2">
+                Formations
+              </h1>
+              <motion.div 
+                className="h-px bg-gradient-to-r from-transparent via-blue-400/40 to-transparent"
+                initial={{ width: 0, opacity: 0 }}
+                animate={{ width: "100%", opacity: 1 }}
+                transition={{ delay: 0.5, duration: 0.8 }}
+              />
+            </motion.div>
+            <p className="text-white/60">Accédez à nos formations premium pour maîtriser le marketing digital et l'IA.</p>
             
             {/* Featured Courses */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

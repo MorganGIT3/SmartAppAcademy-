@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LogOut, Target, Home, Calendar, User, Mail, Shield, Clock, X, BrainCog } from 'lucide-react';
+import logoImage from '@/assets/logo.png';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FullScreenCalendar } from './FullScreenCalendar';
 import { CalComBookingPage } from './CalComBookingPage';
@@ -201,7 +202,7 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
               whileTap={{ scale: 0.95 }}
             >
               <img 
-                src="/logo.png" 
+                src={logoImage} 
                 alt="SmartApp Academy Logo" 
                 className="w-full h-full object-cover scale-110"
               />

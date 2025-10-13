@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion, useMotionTemplate, useMotionValue, animate } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
-import { useDramaticSound } from '@/hooks/useDramaticSound';
+import { useBassDropSound } from '@/hooks/useBassDropSound';
 import { supabase, getCurrentUser } from '@/lib/supabase';
 
 interface OnboardingPageProps {
@@ -13,7 +13,7 @@ const COLORS_BLUE = ["#1E67C6", "#3B82F6", "#0EA5E9", "#06B6D4"];
 
 export function OnboardingPage({ onContinue }: OnboardingPageProps) {
   const color = useMotionValue(COLORS_BLUE[0]);
-  const { playDramaticSound } = useDramaticSound();
+  const { playBassDropSound } = useBassDropSound();
   const [userFirstName, setUserFirstName] = useState<string | null>(null);
 
   useEffect(() => {
@@ -59,7 +59,7 @@ export function OnboardingPage({ onContinue }: OnboardingPageProps) {
   };
 
   const handleDashboardClick = () => {
-    playDramaticSound();
+    playBassDropSound();
     onContinue();
   };
 

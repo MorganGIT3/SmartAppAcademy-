@@ -108,7 +108,16 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
                         transition={{ delay: card.delay, duration: 0.5 }}
                         whileHover={{ y: -8, scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
-                        onClick={() => setCurrentView(card.view)}
+                        onClick={() => {
+                          if (card.view === '/formation') {
+                            window.open(
+                              "https://alive-buffer-ca8.notion.site/SmartApp-Academy-Cr-e-lance-et-vends-ton-application-IA-no-code-des-entreprises-en-30-jours-86dc953a59a14aceae127c06e675a098",
+                              "_blank"
+                            );
+                          } else {
+                            setCurrentView(card.view);
+                          }
+                        }}
                         className="backdrop-blur-2xl bg-white/[0.02] rounded-2xl border border-white/[0.05] p-6 hover:border-blue-400/30 transition-all duration-300 cursor-pointer group"
                       >
                         <div className="flex items-center justify-center mb-4">
@@ -140,19 +149,6 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
             return (
               <div className="min-h-screen">
                 <SmartAIAssistant />
-              </div>
-            );
-
-          case '/formation':
-            // Redirection simple vers Notion
-            useEffect(() => {
-              window.location.href = 'https://alive-buffer-ca8.notion.site/SmartApp-Academy-Cr-e-lance-et-vends-ton-application-IA-no-code-des-entreprises-en-30-jours-86dc953a59a14aceae127c06e675a098';
-            }, []);
-            return (
-              <div className="min-h-screen flex items-center justify-center">
-                <div className="text-center">
-                  <h1 className="text-2xl text-white">Redirection vers la formation...</h1>
-                </div>
               </div>
             );
 

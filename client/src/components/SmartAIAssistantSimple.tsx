@@ -4,7 +4,7 @@ import { ArrowUp, BrainCog, SendIcon, Sparkles, LoaderIcon } from "lucide-react"
 import { cn } from "@/lib/utils";
 
 // ⚠️ CONFIGURATION - Clé OpenAI via variable d'environnement
-const OPENAI_API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY || ""; // 🔒 Clé sécurisée
+const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY || ""; // 🔒 Clé sécurisée
 
 // Prompt par défaut (celui de Prosmo)
 const DEFAULT_PROMPT = `Tu es **Smart AI Assistant**, l'assistant officiel de Prosmo.
@@ -210,7 +210,7 @@ export function SmartAIAssistantSimple() {
 
     // Vérifier la clé API
     if (!OPENAI_API_KEY || OPENAI_API_KEY === "sk-votre-clé-openai-ici") {
-      alert('⚠️ Veuillez configurer votre clé OpenAI dans le fichier SmartAIAssistantSimple.tsx (ligne 7)');
+      alert('⚠️ Veuillez configurer votre clé OpenAI dans le fichier .env (VITE_OPENAI_API_KEY)');
       return;
     }
 

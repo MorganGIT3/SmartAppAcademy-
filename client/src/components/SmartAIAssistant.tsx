@@ -28,10 +28,15 @@ const styles = `
   }
 `;
 
-// Inject styles into document
-const styleSheet = document.createElement("style");
-styleSheet.innerText = styles;
-document.head.appendChild(styleSheet);
+// Function to inject styles (will be called in useEffect)
+const injectStyles = () => {
+  if (typeof document !== 'undefined' && !document.getElementById('smart-ai-assistant-styles')) {
+    const styleSheet = document.createElement("style");
+    styleSheet.id = 'smart-ai-assistant-styles';
+    styleSheet.innerText = styles;
+    document.head.appendChild(styleSheet);
+  }
+};
 
 // Textarea Component
 interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -819,6 +824,11 @@ export function SmartAIAssistant() {
   const [isLoading, setIsLoading] = React.useState(false);
   const [input, setInput] = React.useState("");
   const [conversationId, setConversationId] = React.useState<string | null>(null);
+
+  // Inject styles on component mount
+  React.useEffect(() => {
+    injectStyles();
+  }, []);
 
   const handleSendMessage = async (message: string, files?: File[]) => {
     const newMessage = {

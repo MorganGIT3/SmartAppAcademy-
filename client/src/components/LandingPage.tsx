@@ -41,7 +41,7 @@ export function LandingPage({ onLogin }: LandingPageProps) {
       {/* Bouton Admin discret en haut à droite */}
       <div className="absolute top-0 right-0 z-30 p-6">
         <button 
-          onClick={() => { playClick(); setOtpModalOpen(true); }}
+          onClick={() => { setOtpModalOpen(true); }}
           className="text-xs text-gray-400 hover:text-gray-200 transition-colors duration-200 opacity-30 hover:opacity-60 cursor-pointer"
           title="Accès Admin"
         >

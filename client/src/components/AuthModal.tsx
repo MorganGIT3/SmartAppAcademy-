@@ -35,7 +35,6 @@ export function AuthModal({ open, onOpenChange, onAuthSuccess }: AuthModalProps)
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    playAuthSound();
     setIsLoading(true);
     setError("");
 

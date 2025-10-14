@@ -222,6 +222,7 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
             { icon: Home, label: 'Dashboard', view: '/dashboard' },
             { icon: Target, label: 'Book un Call', view: '/book-call' },
             { icon: BrainCog, label: 'Smart AI Assistant', view: '/ai-assistant' },
+            { icon: Shield, label: 'Formation', view: '/formation' },
           ].map((item, index) => (
             <motion.div
               key={item.view}
@@ -235,7 +236,16 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
                   ? 'text-white'
                   : 'text-white/60 hover:text-white hover:bg-white/[0.05]'
               }`}
-              onClick={() => setCurrentView(item.view)}
+              onClick={() => {
+                if (item.view === '/formation') {
+                  window.open(
+                    "https://alive-buffer-ca8.notion.site/SmartApp-Academy-Cr-e-lance-et-vends-ton-application-IA-no-code-des-entreprises-en-30-jours-86dc953a59a14aceae127c06e675a098",
+                    "_blank"
+                  );
+                } else {
+                  setCurrentView(item.view);
+                }
+              }}
             >
               {/* Effet de fond glassmorphism pour l'item actif */}
               {currentView === item.view && (

@@ -952,6 +952,115 @@ export const deleteCallFromHistory = async (callId: string): Promise<boolean> =>
   }
 }
 
+// ===== FONCTIONS LIMITATION D'APPELS =====
+
+// Interface pour les limites d'appels
+export interface UserCallLimits {
+  calls_remaining: number
+  calls_used: number
+  week_start_date: string
+  last_reset_date: string
+}
+
+// Récupérer les limites d'appels de l'utilisateur connecté
+export const getUserCallLimits = async (): Promise<UserCallLimits | null> => {
+  try {
+    const user = await getCurrentUser()
+    if (!user) {
+      throw new Error('Utilisateur non connecté')
+    }
+
+    const { data, error } = await supabase.rpc('get_user_call_limits', {
+      p_user_id: user.id
+    })
+
+    if (error) {
+      console.error('Erreur lors de la récupération des limites:', error)
+      throw error
+    }
+
+    return data as UserCallLimits
+  } catch (error) {
+    console.error('Erreur dans getUserCallLimits:', error)
+    return null
+  }
+}
+
+// Utiliser un appel (décrémenter)
+export const useCall = async (bookingId: string): Promise<{ success: boolean; message: string; calls_remaining?: number }> => {
+  try {
+    const user = await getCurrentUser()
+    if (!user) {
+      throw new Error('Utilisateur non connecté')
+    }
+
+    const { data, error } = await supabase.rpc('use_call', {
+      p_user_id: user.id,
+      p_booking_id: bookingId
+    })
+
+    if (error) {
+      console.error('Erreur lors de l\'utilisation d\'un appel:', error)
+      throw error
+    }
+
+    return data as { success: boolean; message: string; calls_remaining?: number }
+  } catch (error) {
+    console.error('Erreur dans useCall:', error)
+    return {
+      success: false,
+      message: 'Erreur lors de l\'enregistrement de l\'appel'
+    }
+  }
+}
+
+// Enregistrer un booking Cal.com
+export const recordCalComBooking = async (bookingData: {
+  booking_id: string
+  email: string
+  name?: string
+  booking_date: string
+  event_type?: string
+  status?: string
+}): Promise<boolean> => {
+  try {
+    const user = await getCurrentUser()
+    if (!user) {
+      throw new Error('Utilisateur non connecté')
+    }
+
+    // Vérifier que l'email correspond
+    if (user.email?.toLowerCase() !== bookingData.email.toLowerCase()) {
+      throw new Error('L\'email du booking ne correspond pas à votre compte')
+    }
+
+    const { error } = await supabase
+      .from('calcom_bookings')
+      .insert({
+        user_id: user.id,
+        booking_id: bookingData.booking_id,
+        email: bookingData.email,
+        name: bookingData.name,
+        booking_date: bookingData.booking_date,
+        event_type: bookingData.event_type,
+        status: bookingData.status || 'scheduled'
+      })
+
+    if (error) {
+      console.error('Erreur lors de l\'enregistrement du booking:', error)
+      throw error
+    }
+
+    // Décrémenter le nombre d'appels
+    await useCall(bookingData.booking_id)
+
+    return true
+  } catch (error) {
+    console.error('Erreur dans recordCalComBooking:', error)
+    return false
+  }
+}
+
 // ===== FONCTIONS CHATBOT IA =====
 
 // Interface pour les conversations IA

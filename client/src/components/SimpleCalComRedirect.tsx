@@ -1,20 +1,53 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { Calendar, Phone, AlertCircle } from "lucide-react"
+import { getCurrentUser, getUserCallLimits, type UserCallLimits } from "@/lib/supabase"
 
 export function SimpleCalComRedirect() {
   const [showConfirmation, setShowConfirmation] = useState(false)
   const [isRedirecting, setIsRedirecting] = useState(false)
+  const [userEmail, setUserEmail] = useState<string>("")
+  const [callLimits, setCallLimits] = useState<UserCallLimits | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
 
+
+  // Charger les données de l'utilisateur au montage
+  useEffect(() => {
+    const loadUserData = async () => {
+      try {
+        const user = await getCurrentUser()
+        if (user && user.email) {
+          setUserEmail(user.email)
+        }
+
+        const limits = await getUserCallLimits()
+        if (limits) {
+          setCallLimits(limits)
+        }
+      } catch (error) {
+        console.error('Erreur lors du chargement des données:', error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    loadUserData()
+  }, [])
 
   const handleButtonClick = () => {
+    // Vérifier s'il reste des appels
+    if (callLimits && callLimits.calls_remaining <= 0) {
+      alert('❌ Vous avez atteint votre limite de 2 appels pour cette semaine. Vos appels se rechargeront lundi prochain.')
+      return
+    }
     setShowConfirmation(true)
   }
 
   const handleConfirm = () => {
     setIsRedirecting(true)
-    // Rediriger vers cal.com
-    window.location.href = 'https://cal.com/smartappacademy/1h-d-accompagnement'
+    // Rediriger vers cal.com avec l'email pré-rempli
+    const calComUrl = `https://cal.com/smartappacademy/1h-d-accompagnement?email=${encodeURIComponent(userEmail)}`
+    window.location.href = calComUrl
   }
 
   const handleCancel = () => {
@@ -26,9 +59,20 @@ export function SimpleCalComRedirect() {
       
       {/* Message appels restants en haut à droite */}
       <div className="absolute top-6 right-6 z-20">
-        <div className="bg-gradient-to-r from-gray-800 to-black text-white px-4 py-2 rounded-lg shadow-lg">
-          <span className="font-semibold">📞 Il vous reste 2 appels</span>
-        </div>
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="bg-gradient-to-r from-gray-800 to-black text-white px-4 py-2 rounded-lg shadow-lg"
+        >
+          {isLoading ? (
+            <span className="font-semibold">⏳ Chargement...</span>
+          ) : (
+            <span className="font-semibold">
+              📞 Il vous reste {callLimits?.calls_remaining ?? 2} appel{(callLimits?.calls_remaining ?? 2) > 1 ? 's' : ''}
+            </span>
+          )}
+        </motion.div>
       </div>
 
       {/* Contenu principal */}
@@ -124,7 +168,7 @@ export function SimpleCalComRedirect() {
             <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-6">
               <p className="text-gray-700 text-lg leading-relaxed">
                 Si vous appuyez sur <span className="font-bold text-blue-600">continuer</span>, 
-                vous n'aurez plus qu'<span className="font-bold text-blue-600">1 appel</span> disponible pour cette semaine.
+                vous n'aurez plus que <span className="font-bold text-blue-600">{(callLimits?.calls_remaining ?? 2) - 1} appel{((callLimits?.calls_remaining ?? 2) - 1) > 1 ? 's' : ''}</span> disponible{((callLimits?.calls_remaining ?? 2) - 1) > 1 ? 's' : ''} pour cette semaine.
               </p>
               <p className="text-gray-600 mt-4">
                 Voulez-vous vraiment continuer ?
@@ -134,10 +178,19 @@ export function SimpleCalComRedirect() {
               </p>
             </div>
 
-            {/* Message important en rouge */}
+            {/* Message important en rouge avec email */}
             <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6">
-              <p className="text-red-700 font-bold text-center">
-                ⚠️ TRÈS IMPORTANT : Réserver votre appel avec le même email que vous avez utilisé pour votre connexion sur votre app SmartApp Academy™
+              <p className="text-red-700 font-bold text-center mb-3">
+                ⚠️ TRÈS IMPORTANT : Réservez votre appel avec le même email que votre compte SmartApp Academy™
+              </p>
+              <div className="bg-white border-2 border-red-300 rounded-lg p-3 mt-3">
+                <p className="text-gray-600 text-sm mb-1 text-center">Votre email de connexion :</p>
+                <p className="text-red-600 font-bold text-lg text-center break-all">
+                  {userEmail || 'Chargement...'}
+                </p>
+              </div>
+              <p className="text-red-600 text-sm mt-3 text-center">
+                ⚠️ Si vous utilisez un autre email, l'appel ne sera PAS pris en compte !
               </p>
             </div>
 

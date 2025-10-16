@@ -82,21 +82,32 @@ export default function LandingPageNew({ onLogin, onSignup, onGoToOnboarding }: 
 
             {/* Boutons conditionnels */}
             {!isLoading && (
-              <div className="flex flex-col sm:flex-row gap-4 justify-center relative z-30">
+              <div className="flex flex-col gap-4 justify-center relative z-30">
                 {isRecognized ? (
-                  // Bouton GO pour utilisateur reconnu
-                  <button 
-                    onClick={() => { 
-                      playDramaticSound(); 
-                      onGoToOnboarding?.(); 
-                    }}
-                    className="bg-gradient-to-t from-white to-gray-100 hover:from-gray-100 hover:to-gray-200 text-gray-800 px-12 py-5 text-xl font-bold rounded-lg transition-all duration-200 shadow-lg shadow-white/50 cursor-pointer relative z-40 transform hover:scale-105"
-                  >
-                    GO
-                  </button>
+                  // Boutons pour utilisateur reconnu
+                  <div className="flex flex-col gap-3 items-center">
+                    <button 
+                      onClick={() => { 
+                        playDramaticSound(); 
+                        onGoToOnboarding?.(); 
+                      }}
+                      className="bg-gradient-to-t from-white to-gray-100 hover:from-gray-100 hover:to-gray-200 text-gray-800 px-12 py-5 text-xl font-bold rounded-lg transition-all duration-200 shadow-lg shadow-white/50 cursor-pointer relative z-40 transform hover:scale-105"
+                    >
+                      GO
+                    </button>
+                    <button 
+                      onClick={() => { 
+                        playDramaticSound(); 
+                        onSignup?.(); 
+                      }}
+                      className="bg-transparent border border-gray-400 text-gray-300 hover:bg-white/10 hover:text-white px-6 py-2 text-sm rounded-lg transition-all duration-200 cursor-pointer relative z-40"
+                    >
+                      S'inscrire avec un autre compte
+                    </button>
+                  </div>
                 ) : (
                   // Boutons classiques pour nouveaux utilisateurs
-                  <>
+                  <div className="flex flex-col sm:flex-row gap-4">
                     <button 
                       onClick={() => { playDramaticSound(); onSignup?.(); }}
                       className="bg-gradient-to-t from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-8 py-4 text-lg rounded-lg transition-all duration-200 shadow-lg shadow-blue-500/50 cursor-pointer relative z-40"
@@ -109,7 +120,7 @@ export default function LandingPageNew({ onLogin, onSignup, onGoToOnboarding }: 
                     >
                       Connection
                     </button>
-                  </>
+                  </div>
                 )}
               </div>
             )}

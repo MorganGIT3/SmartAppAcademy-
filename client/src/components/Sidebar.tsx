@@ -93,7 +93,7 @@ export function AppSidebar({ onNavigate }: AppSidebarProps) {
           <div className="flex items-center justify-center w-8 h-8 rounded-md bg-gradient-to-t from-blue-500 to-blue-600">
             <Zap className="h-4 w-4 text-white" />
           </div>
-          <span className="font-bold text-lg text-white">SmartApp Academy™</span>
+          <span className="font-bold text-lg text-white">ZeroToApp</span>
         </div>
       </SidebarHeader>
       

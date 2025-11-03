@@ -57,7 +57,7 @@ export default function LandingPageNew({ onLogin, onSignup, onGoToOnboarding }: 
             </div>
 
             <h1 className="text-6xl md:text-8xl font-bold mb-6 text-white">
-              Connecte toi à SmartApp Academy™
+              Connecte toi à ZeroToApp
             </h1>
 
             <p className="text-xl md:text-2xl text-gray-300 mb-8">

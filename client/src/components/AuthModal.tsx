@@ -186,7 +186,7 @@ export function AuthModal({ open, onOpenChange, onAuthSuccess }: AuthModalProps)
           <div className="relative z-10 p-8 py-14">
             <DialogHeader className="pb-6">
               <DialogTitle className="text-2xl font-bold text-center text-white">
-                Bienvenu dans <span className="text-blue-300">SmartApp Academy™</span>
+                Bienvenu dans <span className="text-blue-300">ZeroToApp</span>
               </DialogTitle>
             </DialogHeader>
             

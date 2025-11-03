@@ -17,7 +17,7 @@ const ADMIN_CODES = {
   'smartapp2024': { 
     name: 'SmartApp 2024', 
     level: 'admin', 
-    description: 'Accès SmartApp Academy 2024',
+    description: 'Accès ZeroToApp 2024',
     permissions: ['read', 'write']
   },
   'academy2024': { 

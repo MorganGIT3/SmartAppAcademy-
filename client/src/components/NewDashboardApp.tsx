@@ -92,7 +92,7 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.4, duration: 0.5 }}
                   >
-                    Bienvenue dans votre espace SmartApp Academy™
+                    Bienvenue dans votre espace ZeroToApp
                   </motion.p>
                   
                   {/* Cards modernes */}
@@ -161,7 +161,7 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
                 Dashboard
               </h1>
               <p className="text-xl md:text-2xl text-gray-300 mb-12">
-                Bienvenue dans votre espace SmartApp Academy™
+                Bienvenue dans votre espace ZeroToApp
               </p>
         </div>
       </div>
@@ -203,15 +203,14 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
             >
               <img 
                 src={logoImage} 
-                alt="SmartApp Academy Logo" 
+                alt="ZeroToApp Logo" 
                 className="w-full h-full object-cover scale-110"
               />
             </motion.div>
             <div>
               <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-white/60">
-                SmartApp
+                ZeroToApp
               </h1>
-              <p className="text-xs text-blue-400/80">Academy™</p>
             </div>
           </div>
         </motion.div>

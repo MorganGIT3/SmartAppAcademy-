@@ -181,7 +181,7 @@ export function SimpleCalComRedirect() {
             {/* Message important en rouge avec email */}
             <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6">
               <p className="text-red-700 font-bold text-center mb-3">
-                ⚠️ TRÈS IMPORTANT : Réservez votre appel avec le même email que votre compte SmartApp Academy™
+                ⚠️ TRÈS IMPORTANT : Réservez votre appel avec le même email que votre compte ZeroToApp
               </p>
               <div className="bg-white border-2 border-red-300 rounded-lg p-3 mt-3">
                 <p className="text-gray-600 text-sm mb-1 text-center">Votre email de connexion :</p>

@@ -93,7 +93,7 @@ serve(async (req) => {
           JSON.stringify({ 
             success: true, 
             message: 'Booking enregistré mais utilisateur non trouvé',
-            warning: 'L\'email ne correspond à aucun compte SmartApp Academy'
+            warning: 'L\'email ne correspond à aucun compte ZeroToApp'
           }),
           { 
             status: 200,

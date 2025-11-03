@@ -74,7 +74,7 @@ Deno.serve(async (req) => {
       .limit(1)
       .single()
 
-    const systemPrompt = systemPromptData?.prompt || `Tu es "SmartApp Academy Assistant", un assistant IA spécialisé dans l'accompagnement des entrepreneurs.
+    const systemPrompt = systemPromptData?.prompt || `Tu es "ZeroToApp Assistant", un assistant IA spécialisé dans l'accompagnement des entrepreneurs.
 
 Règles importantes:
 - Réponds TOUJOURS en français, de manière claire et concise
@@ -85,7 +85,7 @@ Règles importantes:
 - INTERDICTIONS: pas de données sensibles, pas d'informations inventées, pas de code non testé pour des opérations critiques
 - Si la question sort de ton domaine d'expertise, réponds: "Cette question sort de mon domaine d'expertise."
 
-Ton objectif: Aider les entrepreneurs à réussir leur projet avec SmartApp Academy™.`
+Ton objectif: Aider les entrepreneurs à réussir leur projet avec ZeroToApp.`
 
     // Gérer la conversation (créer si nécessaire)
     let convId = conversationId

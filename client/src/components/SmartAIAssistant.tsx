@@ -935,7 +935,7 @@ export function SmartAIAssistant() {
               <BrainCog className="w-8 h-8 text-blue-400" />
             </div>
             <h3 className="text-xl font-semibold text-white mb-2">Bienvenue dans Smart AI Assistant</h3>
-            <p className="text-gray-400">Posez-moi vos questions ou demandez de l'aide pour votre projet SmartApp Academy™</p>
+            <p className="text-gray-400">Posez-moi vos questions ou demandez de l'aide pour votre projet ZeroToApp</p>
           </div>
         ) : (
           messages.map((message) => (

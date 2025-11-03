@@ -57,7 +57,7 @@ export function Dashboard() {
                 transition={{ delay: 0.5, duration: 0.8 }}
               />
             </motion.div>
-            <p className="text-white/60">Bienvenue dans votre espace SmartApp Academy™</p>
+            <p className="text-white/60">Bienvenue dans votre espace ZeroToApp</p>
           </div>
 
           {/* Hero Section */}

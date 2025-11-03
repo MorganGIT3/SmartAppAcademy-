@@ -34,7 +34,7 @@ export function LandingPage({ onLogin }: LandingPageProps) {
           <div className="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500 shadow-lg shadow-blue-500/50">
             <Zap className="h-4 w-4 text-white" />
           </div>
-          <span className="font-bold text-xl text-white">SmartApp Academy™</span>
+          <span className="font-bold text-xl text-white">ZeroToApp</span>
         </div>
       </div>
 

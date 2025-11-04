@@ -8,8 +8,8 @@ interface OnboardingPageProps {
   onContinue: () => void;
 }
 
-// Couleurs bleues seulement
-const COLORS_BLUE = ["#1E67C6", "#3B82F6", "#0EA5E9", "#06B6D4"];
+// Couleurs violettes seulement
+const COLORS_BLUE = ["#8b5cf6", "#8b5cf6", "#8b5cf6", "#8b5cf6"];
 
 export function OnboardingPage({ onContinue }: OnboardingPageProps) {
   const color = useMotionValue(COLORS_BLUE[0]);
@@ -69,12 +69,12 @@ export function OnboardingPage({ onContinue }: OnboardingPageProps) {
     <>
       <style jsx>{`
         .styled-button {
-          --white: #e7f4ff;
-          --blue-100: #b1d4fd;
-          --blue-200: #90c3ff;
-          --blue-300: #89b4f2;
-          --blue-400: #2686e2;
-          --blue-500: #2b5f83;
+          --white: #f3e8ff;
+          --blue-100: #c4b5fd;
+          --blue-200: #a78bfa;
+          --blue-300: #8b5cf6;
+          --blue-400: #7c3aed;
+          --blue-500: #6d28d9;
           --radius: 18px;
 
           border-radius: var(--radius);
@@ -109,13 +109,13 @@ export function OnboardingPage({ onContinue }: OnboardingPageProps) {
           filter: blur(5px);
           transition: all 0.3s ease;
           box-shadow:
-            -7px 6px 0 0 rgb(75 130 155 / 40%),
-            -14px 12px 0 0 rgb(75 130 155 / 30%),
-            -21px 18px 4px 0 rgb(75 130 155 / 25%),
-            -28px 24px 8px 0 rgb(75 130 155 / 15%),
-            -35px 30px 12px 0 rgb(75 130 155 / 12%),
-            -42px 36px 16px 0 rgb(75 130 155 / 8%),
-            -56px 42px 20px 0 rgb(75 130 155 / 5%);
+            -7px 6px 0 0 rgb(139 92 246 / 40%),
+            -14px 12px 0 0 rgb(139 92 246 / 30%),
+            -21px 18px 4px 0 rgb(139 92 246 / 25%),
+            -28px 24px 8px 0 rgb(139 92 246 / 15%),
+            -35px 30px 12px 0 rgb(139 92 246 / 12%),
+            -42px 36px 16px 0 rgb(139 92 246 / 8%),
+            -56px 42px 20px 0 rgb(139 92 246 / 5%);
         }
 
         .wrap {
@@ -330,13 +330,13 @@ export function OnboardingPage({ onContinue }: OnboardingPageProps) {
           filter: blur(5px);
           opacity: 0.7;
           box-shadow:
-            -7px 6px 0 0 rgb(75 130 155 / 40%),
-            -14px 12px 0 0 rgb(75 130 155 / 25%),
-            -21px 18px 4px 0 rgb(75 130 155 / 15%);
+            -7px 6px 0 0 rgb(139 92 246 / 40%),
+            -14px 12px 0 0 rgb(139 92 246 / 25%),
+            -21px 18px 4px 0 rgb(139 92 246 / 15%);
         }
         .styled-button:active .content {
           box-shadow:
-            inset -1px 12px 8px -5px rgba(0, 71, 137, 0.4),
+            inset -1px 12px 8px -5px rgba(139, 92, 246, 0.4),
             inset 0px -3px 8px 0px var(--blue-200);
         }
 
@@ -468,7 +468,7 @@ export function OnboardingPage({ onContinue }: OnboardingPageProps) {
           }
           to {
             stroke-dashoffset: -480;
-            stroke: #c6e7f9;
+            stroke: #c4b5fd;
           }
         }
 
@@ -524,7 +524,7 @@ export function OnboardingPage({ onContinue }: OnboardingPageProps) {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="mb-1.5 inline-block rounded-full bg-gray-600/50 px-3 py-1.5 text-sm text-gray-200"
           >
-            Version MVP
+            by TM
           </motion.span>
 
           {/* Welcome Text with Custom Animation */}

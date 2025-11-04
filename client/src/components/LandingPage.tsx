@@ -31,7 +31,7 @@ export function LandingPage({ onLogin }: LandingPageProps) {
       {/* Logo seulement en haut à gauche */}
       <div className="absolute top-0 left-0 z-10 p-6">
         <div className="flex items-center gap-2">
-          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500 shadow-lg shadow-blue-500/50">
+          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r from-purple-400 via-[#a78bfa] to-purple-300 shadow-lg shadow-[#a78bfa]/50 drop-shadow-[0_0_15px_rgba(167,139,250,0.5)]">
             <Zap className="h-4 w-4 text-white" />
           </div>
           <span className="font-bold text-xl text-white">ZeroToApp</span>

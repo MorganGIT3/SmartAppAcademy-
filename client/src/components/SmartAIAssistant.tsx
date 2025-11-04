@@ -915,14 +915,14 @@ export function SmartAIAssistant() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-900 via-blue-800 to-black flex flex-col">
+    <div className="min-h-screen bg-gradient-to-b from-purple-900 via-[#a78bfa]/20 to-black flex flex-col">
       {/* Header simple */}
       <div className="p-6">
         <div className="flex items-center gap-3">
-          <BrainCog className="w-8 h-8 text-blue-400" />
+          <BrainCog className="w-8 h-8 text-[#a78bfa] drop-shadow-[0_0_8px_rgba(167,139,250,0.5)]" />
           <div>
             <h1 className="text-2xl font-bold text-white">Smart AI Assistant</h1>
-            <p className="text-sm text-blue-300">Votre assistant IA personnel</p>
+            <p className="text-sm text-purple-300">Votre assistant IA personnel</p>
           </div>
         </div>
       </div>
@@ -931,8 +931,8 @@ export function SmartAIAssistant() {
       <div className="flex-1 overflow-y-auto px-6 space-y-4">
         {messages.length === 0 ? (
           <div className="text-center py-12">
-            <div className="w-16 h-16 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-              <BrainCog className="w-8 h-8 text-blue-400" />
+            <div className="w-16 h-16 bg-gradient-to-br from-purple-400/20 via-[#a78bfa]/20 to-purple-300/20 rounded-full flex items-center justify-center mx-auto mb-4">
+              <BrainCog className="w-8 h-8 text-[#a78bfa] drop-shadow-[0_0_8px_rgba(167,139,250,0.5)]" />
             </div>
             <h3 className="text-xl font-semibold text-white mb-2">Bienvenue dans Smart AI Assistant</h3>
             <p className="text-gray-400">Posez-moi vos questions ou demandez de l'aide pour votre projet ZeroToApp</p>
@@ -948,7 +948,7 @@ export function SmartAIAssistant() {
               <div
                 className={`max-w-[80%] rounded-2xl px-4 py-3 ${
                   message.sender === 'user'
-                    ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white'
+                    ? 'bg-gradient-to-r from-purple-400 via-[#a78bfa] to-purple-300 text-white drop-shadow-[0_0_8px_rgba(167,139,250,0.4)]'
                     : 'bg-gray-800/30 border border-gray-600/30 text-gray-100'
                 }`}
               >
@@ -969,9 +969,9 @@ export function SmartAIAssistant() {
           >
             <div className="bg-gray-800/30 border border-gray-600/30 rounded-2xl px-4 py-3">
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" />
-                <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
-                <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+                <div className="w-2 h-2 bg-[#a78bfa] rounded-full animate-bounce" />
+                <div className="w-2 h-2 bg-[#a78bfa] rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
+                <div className="w-2 h-2 bg-[#a78bfa] rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
                 <span className="text-sm text-gray-400 ml-2">L'IA réfléchit...</span>
               </div>
             </div>
@@ -987,13 +987,13 @@ export function SmartAIAssistant() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Posez votre question à l'assistant IA..."
-            className="flex-1 bg-gray-800/30 border border-gray-600/30 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-blue-500/50 transition-colors"
+            className="flex-1 bg-gray-800/30 border border-gray-600/30 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-[#a78bfa]/50 transition-colors"
             disabled={isLoading}
           />
           <button
             type="submit"
             disabled={isLoading || !input.trim()}
-            className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-white px-6 py-3 rounded-xl font-semibold transition-all duration-200 flex items-center gap-2"
+            className="bg-gradient-to-r from-purple-400 via-[#a78bfa] to-purple-300 hover:from-purple-500 hover:via-[#a78bfa] hover:to-purple-400 disabled:opacity-50 disabled:cursor-not-allowed text-white px-6 py-3 rounded-xl font-semibold transition-all duration-200 flex items-center gap-2 shadow-lg shadow-[#a78bfa]/50 drop-shadow-[0_0_10px_rgba(167,139,250,0.4)]"
           >
             {isLoading ? (
               <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />

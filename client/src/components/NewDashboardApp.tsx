@@ -119,11 +119,11 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
                             setCurrentView(card.view);
                           }
                         }}
-                        className="backdrop-blur-2xl bg-white/[0.02] rounded-2xl border border-white/[0.05] p-6 hover:border-blue-400/30 transition-all duration-300 cursor-pointer group"
+                        className="backdrop-blur-2xl bg-white/[0.02] rounded-2xl border border-white/[0.05] p-6 hover:border-[#a78bfa]/30 transition-all duration-300 cursor-pointer group"
                       >
                         <div className="flex items-center justify-center mb-4">
-                          <div className="w-14 h-14 bg-gradient-to-br from-blue-500/20 to-blue-600/20 rounded-xl flex items-center justify-center group-hover:shadow-lg group-hover:shadow-blue-500/20 transition-all duration-300">
-                            <card.icon className="w-7 h-7 text-blue-400" />
+                          <div className="w-14 h-14 bg-gradient-to-br from-purple-400/20 via-[#a78bfa]/20 to-purple-300/20 rounded-xl flex items-center justify-center group-hover:shadow-lg group-hover:shadow-[#a78bfa]/20 transition-all duration-300">
+                            <card.icon className="w-7 h-7 text-[#a78bfa] drop-shadow-[0_0_8px_rgba(167,139,250,0.5)]" />
                           </div>
                         </div>
                         <h3 className="text-lg font-semibold text-white mb-2">
@@ -175,7 +175,7 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
     <div className="min-h-screen w-full bg-[#0A0A0B] relative flex overflow-hidden">
       {/* Effets de fond animés */}
       <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full mix-blend-normal filter blur-[128px] animate-pulse" />
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#a78bfa]/10 rounded-full mix-blend-normal filter blur-[128px] animate-pulse" />
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-indigo-500/10 rounded-full mix-blend-normal filter blur-[128px] animate-pulse" style={{ animationDelay: '700ms' }} />
         <div className="absolute top-1/4 right-1/3 w-64 h-64 bg-purple-500/10 rounded-full mix-blend-normal filter blur-[96px] animate-pulse" style={{ animationDelay: '1000ms' }} />
       </div>
@@ -197,7 +197,7 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
         >
           <div className="flex items-center space-x-3">
             <motion.div 
-              className="w-14 h-14 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/30 overflow-hidden"
+              className="w-14 h-14 rounded-xl flex items-center justify-center shadow-lg shadow-[#8b5cf6]/30 overflow-hidden bg-[#8b5cf6]"
               whileHover={{ scale: 1.05, rotate: 5 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -250,13 +250,13 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
               {currentView === item.view && (
                 <>
                   <motion.div
-                    className="absolute inset-0 backdrop-blur-xl bg-gradient-to-r from-blue-500/20 via-blue-400/10 to-transparent rounded-xl"
+                    className="absolute inset-0 backdrop-blur-xl bg-gradient-to-r from-purple-400/20 via-[#a78bfa]/10 to-purple-300/20 rounded-xl"
                     layoutId="activeNav"
                     transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                   />
                   {/* Bordure lumineuse */}
                   <motion.div
-                    className="absolute inset-0 rounded-xl border border-blue-400/30"
+                    className="absolute inset-0 rounded-xl border border-[#a78bfa]/30 drop-shadow-[0_0_8px_rgba(167,139,250,0.4)]"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.3 }}
@@ -265,11 +265,11 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
               )}
               
               {/* Icône avec effet de glow quand actif */}
-              <div className={`relative z-10 ${currentView === item.view ? 'text-blue-400' : ''}`}>
+              <div className={`relative z-10 ${currentView === item.view ? 'text-[#a78bfa] drop-shadow-[0_0_8px_rgba(167,139,250,0.5)]' : ''}`}>
                 <item.icon className="w-5 h-5" />
                 {currentView === item.view && (
                   <motion.div
-                    className="absolute inset-0 bg-blue-400/20 rounded-full blur-md"
+                    className="absolute inset-0 bg-[#a78bfa]/20 rounded-full blur-md"
                     animate={{
                       scale: [1, 1.3, 1],
                       opacity: [0.3, 0.6, 0.3],
@@ -378,7 +378,7 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
                 <CardHeader className="flex flex-row items-center justify-between">
                   <div>
                     <CardTitle className="text-white flex items-center gap-2">
-                      <User className="w-5 h-5 text-blue-400" />
+                      <User className="w-5 h-5 text-[#a78bfa]" />
                       Mon Profil
                     </CardTitle>
                     <CardDescription className="text-gray-400">
@@ -399,7 +399,7 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
                     <>
                       {/* Avatar et nom */}
                       <div className="flex items-center gap-4">
-                        <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold text-2xl">
+                        <div className="w-16 h-16 rounded-full bg-gradient-to-br from-purple-400 via-[#a78bfa] to-purple-300 flex items-center justify-center text-white font-bold text-2xl drop-shadow-[0_0_10px_rgba(167,139,250,0.5)]">
                           {userProfile.full_name?.charAt(0).toUpperCase() || 'U'}
                         </div>
                         <div>
@@ -412,7 +412,7 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
                       <div className="space-y-4">
                         <div className="bg-gray-700/30 rounded-lg p-4">
                           <div className="flex items-center gap-2 mb-2">
-                            <Mail className="w-4 h-4 text-blue-400" />
+                            <Mail className="w-4 h-4 text-[#a78bfa]" />
                             <span className="text-gray-400 text-sm">Email</span>
                           </div>
                           <p className="text-white font-medium">{userProfile.email}</p>

@@ -57,7 +57,7 @@ const AnimatedBackground: React.FC = () => {
         const radius = 150 + Math.sin(time * 2 + offset) * 50;
         const alpha = 0.15 + Math.sin(time * 1.5 + offset) * 0.08;
         
-        drawGlow(x, y, radius, '#00AEEF', alpha);
+        drawGlow(x, y, radius, '#8b5cf6', alpha);
       }
 
       // Ambient glow particles
@@ -68,7 +68,7 @@ const AnimatedBackground: React.FC = () => {
         const radius = 80 + Math.sin(time * 3 + offset) * 30;
         const alpha = 0.08 + Math.sin(time + offset) * 0.04;
         
-        drawGlow(x, y, radius, '#0ABEFF', alpha);
+        drawGlow(x, y, radius, '#8b5cf6', alpha);
       }
 
       animationFrameId = requestAnimationFrame(animate);
@@ -132,7 +132,7 @@ const AnimatedBackground: React.FC = () => {
           <div
             className="absolute inset-0"
             style={{
-              background: `radial-gradient(ellipse at 50% 50%, rgba(0, 174, 239, 0.15) 0%, transparent 70%)`,
+              background: `radial-gradient(ellipse at 50% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 70%)`,
               transform: `scale(${1 + wave.id * 0.2})`,
             }}
           />
@@ -149,8 +149,8 @@ const AnimatedBackground: React.FC = () => {
             height: `${particle.size}px`,
             left: `${particle.x}%`,
             top: `${particle.y}%`,
-            background: 'radial-gradient(circle, rgba(10, 190, 255, 0.8) 0%, rgba(0, 174, 239, 0.3) 50%, transparent 100%)',
-            boxShadow: '0 0 10px rgba(10, 190, 255, 0.5)',
+            background: 'radial-gradient(circle, rgba(139, 92, 246, 0.8) 0%, rgba(139, 92, 246, 0.3) 50%, transparent 100%)',
+            boxShadow: '0 0 10px rgba(139, 92, 246, 0.5)',
           }}
           animate={{
             y: [0, particle.offsetY, 0],
@@ -172,8 +172,8 @@ const AnimatedBackground: React.FC = () => {
         className="absolute left-0 right-0 h-px"
         style={{
           top: '50%',
-          background: 'linear-gradient(90deg, transparent 0%, rgba(0, 174, 239, 0.4) 50%, transparent 100%)',
-          boxShadow: '0 0 20px rgba(0, 174, 239, 0.3)',
+          background: 'linear-gradient(90deg, transparent 0%, rgba(139, 92, 246, 0.4) 50%, transparent 100%)',
+          boxShadow: '0 0 20px rgba(139, 92, 246, 0.3)',
         }}
         animate={{
           opacity: [0.2, 0.6, 0.2],
@@ -191,8 +191,8 @@ const AnimatedBackground: React.FC = () => {
         className="absolute top-0 bottom-0 w-px"
         style={{
           left: '50%',
-          background: 'linear-gradient(180deg, transparent 0%, rgba(10, 190, 255, 0.3) 50%, transparent 100%)',
-          boxShadow: '0 0 20px rgba(10, 190, 255, 0.2)',
+          background: 'linear-gradient(180deg, transparent 0%, rgba(139, 92, 246, 0.3) 50%, transparent 100%)',
+          boxShadow: '0 0 20px rgba(139, 92, 246, 0.2)',
         }}
         animate={{
           opacity: [0.2, 0.5, 0.2],
@@ -210,7 +210,7 @@ const AnimatedBackground: React.FC = () => {
       <motion.div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full pointer-events-none"
         style={{
-          background: 'radial-gradient(circle, rgba(0, 174, 239, 0.1) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%)',
           filter: 'blur(40px)',
         }}
         animate={{
@@ -228,7 +228,7 @@ const AnimatedBackground: React.FC = () => {
       <motion.div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none"
         style={{
-          background: 'radial-gradient(circle, transparent 40%, rgba(10, 190, 255, 0.05) 60%, transparent 80%)',
+          background: 'radial-gradient(circle, transparent 40%, rgba(139, 92, 246, 0.05) 60%, transparent 80%)',
           filter: 'blur(30px)',
         }}
         animate={{

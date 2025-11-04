@@ -90,7 +90,7 @@ export function AppSidebar({ onNavigate }: AppSidebarProps) {
     <Sidebar className="bg-gradient-to-b from-neutral-900 via-neutral-800 to-neutral-900 border-r border-neutral-800">
       <SidebarHeader className="p-4 border-b border-neutral-800">
         <div className="flex items-center gap-2">
-          <div className="flex items-center justify-center w-8 h-8 rounded-md bg-gradient-to-t from-blue-500 to-blue-600">
+          <div className="flex items-center justify-center w-8 h-8 rounded-md bg-gradient-to-t from-purple-400 via-[#a78bfa] to-purple-300 drop-shadow-[0_0_10px_rgba(167,139,250,0.5)]">
             <Zap className="h-4 w-4 text-white" />
           </div>
           <span className="font-bold text-lg text-white">ZeroToApp</span>
@@ -108,7 +108,7 @@ export function AppSidebar({ onNavigate }: AppSidebarProps) {
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton 
                       asChild
-                      className={`${isActive ? "bg-gradient-to-r from-blue-500/20 to-blue-600/20 text-blue-400 border border-blue-500/30" : "text-gray-300 hover:bg-white/10 hover:text-white"} transition-all duration-200`}
+                      className={`${isActive ? "bg-gradient-to-r from-purple-400/20 via-[#a78bfa]/20 to-purple-300/20 text-[#a78bfa] border border-[#a78bfa]/30 drop-shadow-[0_0_8px_rgba(167,139,250,0.4)]" : "text-gray-300 hover:bg-white/10 hover:text-white"} transition-all duration-200`}
                       data-testid={`nav-${item.title.toLowerCase()}`}
                     >
                       <button
@@ -156,7 +156,7 @@ export function AppSidebar({ onNavigate }: AppSidebarProps) {
         <div className="flex items-center gap-3">
           <Avatar className="h-8 w-8">
             <AvatarImage src="" alt="User" />
-            <AvatarFallback className="bg-gradient-to-t from-blue-500 to-blue-600 text-white">JD</AvatarFallback>
+            <AvatarFallback className="bg-gradient-to-t from-purple-400 via-[#a78bfa] to-purple-300 text-white drop-shadow-[0_0_10px_rgba(167,139,250,0.5)]">JD</AvatarFallback>
           </Avatar>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-medium truncate text-white">John Doe</p>

@@ -45,19 +45,21 @@ export default function LandingPageNew({ onLogin, onSignup, onGoToOnboarding }: 
         <AuroraBackground>
           <div className="text-center">
             {/* Trust Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-700/90 to-blue-900/90 border border-blue-400/30 shadow-lg shadow-blue-500/20 mb-8">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-600/90 via-[#a78bfa]/90 to-purple-500/90 border border-[#a78bfa]/30 shadow-lg shadow-[#a78bfa]/20 drop-shadow-[0_0_10px_rgba(167,139,250,0.4)] mb-8">
               <div className="flex items-center justify-center w-4 h-4">
-                <svg className="w-3 h-3 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-3 h-3 text-[#a78bfa]" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                 </svg>
               </div>
-              <span className="text-sm font-medium text-blue-100">
+              <span className="text-sm font-medium text-purple-200">
                 Seulement réservé aux membres de l'accompagnement
               </span>
             </div>
 
             <h1 className="text-6xl md:text-8xl font-bold mb-6 text-white">
-              Connecte toi à ZeroToApp
+              Connecte toi à <span className="bg-gradient-to-r from-purple-400 via-[#a78bfa] to-purple-300 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(167,139,250,0.5)]">ZeroToApp</span>
+              <br />
+              By TM
             </h1>
 
             <p className="text-xl md:text-2xl text-gray-300 mb-8">
@@ -110,7 +112,7 @@ export default function LandingPageNew({ onLogin, onSignup, onGoToOnboarding }: 
                   <div className="flex flex-col sm:flex-row gap-4">
                     <button 
                       onClick={() => { playDramaticSound(); onSignup?.(); }}
-                      className="bg-gradient-to-t from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-8 py-4 text-lg rounded-lg transition-all duration-200 shadow-lg shadow-blue-500/50 cursor-pointer relative z-40"
+                      className="bg-gradient-to-t from-purple-400 via-[#a78bfa] to-purple-300 hover:from-purple-500 hover:via-[#a78bfa] hover:to-purple-400 text-white px-8 py-4 text-lg rounded-lg transition-all duration-200 shadow-lg shadow-[#a78bfa]/50 drop-shadow-[0_0_15px_rgba(167,139,250,0.5)] cursor-pointer relative z-40"
                     >
                       Je m'inscris
                     </button>
@@ -128,7 +130,7 @@ export default function LandingPageNew({ onLogin, onSignup, onGoToOnboarding }: 
             {/* Loading state */}
             {isLoading && (
               <div className="flex justify-center relative z-30">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-400"></div>
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#a78bfa]"></div>
               </div>
             )}
       </div>

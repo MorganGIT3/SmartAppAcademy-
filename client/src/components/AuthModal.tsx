@@ -178,15 +178,15 @@ export function AuthModal({ open, onOpenChange, onAuthSuccess }: AuthModalProps)
               alt="Tunnel animation"
               className="w-full h-full object-cover opacity-60"
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-blue-600/80 via-blue-800/90 to-black/95" />
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 via-blue-700/30 to-blue-900/40" />
+            <div className="absolute inset-0 bg-gradient-to-b from-purple-600/80 via-[#a78bfa]/90 to-black/95" />
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-400/20 via-[#a78bfa]/30 to-purple-600/40" />
           </div>
 
           {/* Content */}
           <div className="relative z-10 p-8 py-14">
             <DialogHeader className="pb-6">
               <DialogTitle className="text-2xl font-bold text-center text-white">
-                Bienvenu dans <span className="text-blue-300">ZeroToApp</span>
+                Bienvenu dans <span className="text-[#a78bfa] drop-shadow-[0_0_8px_rgba(167,139,250,0.5)]">ZeroToApp</span>
               </DialogTitle>
             </DialogHeader>
             
@@ -274,7 +274,7 @@ export function AuthModal({ open, onOpenChange, onAuthSuccess }: AuthModalProps)
                       <Button 
                         type="submit" 
                         disabled={isLoading}
-                        className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium py-2.5 rounded-lg transition-all duration-200 shadow-lg" 
+                        className="w-full bg-gradient-to-r from-purple-400 via-[#a78bfa] to-purple-300 hover:from-purple-500 hover:via-[#a78bfa] hover:to-purple-400 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium py-2.5 rounded-lg transition-all duration-200 shadow-lg shadow-[#a78bfa]/50 drop-shadow-[0_0_10px_rgba(167,139,250,0.4)]" 
                         data-testid="button-login-submit"
                       >
                         {isLoading ? "Connexion..." : "Se connecter"}
@@ -283,7 +283,7 @@ export function AuthModal({ open, onOpenChange, onAuthSuccess }: AuthModalProps)
                         <button
                           type="button"
                           onClick={() => setShowForgotPassword(true)}
-                          className="text-blue-300 hover:text-blue-200 text-sm underline transition-colors duration-200"
+                          className="text-[#a78bfa] hover:text-purple-300 text-sm underline transition-colors duration-200"
                         >
                           Mot de passe oublié ?
                         </button>
@@ -358,7 +358,7 @@ export function AuthModal({ open, onOpenChange, onAuthSuccess }: AuthModalProps)
                       <Button 
                         type="submit" 
                         disabled={isLoading}
-                        className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium py-2.5 rounded-lg transition-all duration-200 shadow-lg" 
+                        className="w-full bg-gradient-to-r from-purple-400 via-[#a78bfa] to-purple-300 hover:from-purple-500 hover:via-[#a78bfa] hover:to-purple-400 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium py-2.5 rounded-lg transition-all duration-200 shadow-lg shadow-[#a78bfa]/50 drop-shadow-[0_0_10px_rgba(167,139,250,0.4)]" 
                         data-testid="button-signup-submit"
                       >
                         {isLoading ? "Création..." : "Créer mon compte"}
@@ -384,8 +384,8 @@ export function AuthModal({ open, onOpenChange, onAuthSuccess }: AuthModalProps)
                 alt="Tunnel animation"
                 className="w-full h-full object-cover opacity-60"
               />
-              <div className="absolute inset-0 bg-gradient-to-b from-blue-600/80 via-blue-800/90 to-black/95" />
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 via-blue-700/30 to-blue-900/40" />
+              <div className="absolute inset-0 bg-gradient-to-b from-purple-600/80 via-[#a78bfa]/90 to-black/95" />
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-400/20 via-[#a78bfa]/30 to-purple-600/40" />
             </div>
 
             {/* Content */}

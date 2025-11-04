@@ -81,7 +81,7 @@ export function NewSidebar({ currentView, onNavigate, onLogout }: NewSidebarProp
       {/* Header */}
       <div className="p-6 border-b border-neutral-700">
         <div className="flex items-center gap-3">
-          <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-r from-blue-400 to-blue-600">
+          <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-r from-purple-400 via-[#a78bfa] to-purple-300 drop-shadow-[0_0_10px_rgba(167,139,250,0.5)]">
             <Zap className="h-5 w-5 text-white" />
           </div>
           <div>
@@ -106,7 +106,7 @@ export function NewSidebar({ currentView, onNavigate, onLogout }: NewSidebarProp
                   onClick={() => onNavigate?.(item.url)}
                   className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-medium transition-all duration-300 relative overflow-hidden ${
                     isActive
-                      ? 'text-white bg-gradient-to-r from-blue-500/20 to-blue-700/20 border border-blue-500/30 shadow-lg shadow-blue-500/10'
+                      ? 'text-white bg-gradient-to-r from-purple-400/20 via-[#a78bfa]/20 to-purple-300/20 border border-[#a78bfa]/30 shadow-lg shadow-[#a78bfa]/10 drop-shadow-[0_0_8px_rgba(167,139,250,0.4)]'
                       : 'text-gray-400 hover:text-white hover:bg-neutral-700/50'
                   }`}
                   whileHover={{ scale: 1.02 }}
@@ -118,7 +118,7 @@ export function NewSidebar({ currentView, onNavigate, onLogout }: NewSidebarProp
                   {/* Active indicator */}
                   {isActive && (
                     <motion.div
-                      className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-400 to-blue-600 rounded-r-full"
+                      className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-purple-400 via-[#a78bfa] to-purple-300 rounded-r-full drop-shadow-[0_0_8px_rgba(167,139,250,0.5)]"
                       layoutId="activeIndicator"
                       initial={{ scaleY: 0 }}
                       animate={{ scaleY: 1 }}
@@ -127,11 +127,11 @@ export function NewSidebar({ currentView, onNavigate, onLogout }: NewSidebarProp
                   )}
 
                   {/* Icon with glow effect */}
-                  <div className={`relative ${isActive ? 'text-blue-400' : 'text-gray-400'}`}>
+                  <div className={`relative ${isActive ? 'text-[#a78bfa] drop-shadow-[0_0_8px_rgba(167,139,250,0.5)]' : 'text-gray-400'}`}>
                     <item.icon className="h-5 w-5 relative z-10" />
                     {isActive && (
                       <motion.div
-                        className="absolute inset-0 bg-blue-400 rounded-full blur-md opacity-30"
+                        className="absolute inset-0 bg-[#a78bfa] rounded-full blur-md opacity-30"
                         initial={{ scale: 0, opacity: 0 }}
                         animate={{ scale: 1, opacity: 0.3 }}
                         transition={{ type: "spring", stiffness: 500, damping: 30 }}
@@ -148,7 +148,7 @@ export function NewSidebar({ currentView, onNavigate, onLogout }: NewSidebarProp
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.1 }}
                     >
-                      <ChevronRight className="h-4 w-4 text-blue-400" />
+                      <ChevronRight className="h-4 w-4 text-[#a78bfa]" />
                     </motion.div>
                   )}
                 </motion.button>
